@@ -20,4 +20,7 @@
     <body class="font-sans antialiased">
         @inertia
     </body>
+    <script src="/js/manifest.js"></script>
+    <script src="/js/vendor.js"></script>
+    <script src="/js/app.js"></script>
 </html>
