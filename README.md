@@ -1,1 +1,1 @@
-A monolith laravel app (no API) with an SPA frontend using inertia.js (Vue.js wrapping) as well as a basic PWA feature using silviolleite/laravel-pwa to make it installable and work offline.
+A monolith laravel app (no API) + SPA frontend using inertia.js (Vue.js wrapping) + PWA feature using pwa-builder's pwa starter templates.
