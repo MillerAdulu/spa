@@ -13,6 +13,9 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
+        <!-- Imports the manifest to represent the web application. A web app must have a manifest to be a PWA. -->
+        <link rel="manifest" href="manifest.json" />
+
         <!-- Scripts -->
         @routes
         <script src="{{ mix('js/manifest.js') }}" defer></script>
