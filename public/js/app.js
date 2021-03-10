@@ -1,3 +1,4 @@
+
 (self["webpackChunk"] = self["webpackChunk"] || []).push([["/js/app"],{
 
 /***/ "./resources/js/app.js":
