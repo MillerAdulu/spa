@@ -13,6 +13,9 @@
                 <inertia-link v-if="canRegister" :href="route('register')" class="ml-4 text-sm text-gray-700 underline">
                     Register
                 </inertia-link>
+
+                <pwa-install></pwa-install>
+
             </template>
         </div>
 
@@ -176,6 +179,7 @@
 
 <script>
     export default {
+        name: 'Welcome',
         props: {
             canLogin: Boolean,
             canRegister: Boolean,
