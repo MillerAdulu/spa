@@ -30,6 +30,8 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => 'required|string|email',
+            //'email' || 'mobile_phone_number' => 'required|string',
+            //'mobile_phone_number' => 'required|string',
             'password' => 'required|string',
         ];
     }
@@ -52,6 +54,14 @@ class LoginRequest extends FormRequest
                 'email' => __('auth.failed'),
             ]);
         }
+
+        // elseif (! Auth::attempt($this->only('mobile_phone_number', 'password'), $this->filled('remember'))) {
+        //     RateLimiter::hit($this->throttleKey());
+
+        //     throw ValidationException::withMessages([
+        //         'mobile_phone_number' => __('auth.failed'),
+        //     ]);
+        // }
 
         RateLimiter::clear($this->throttleKey());
     }

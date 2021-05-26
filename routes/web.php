@@ -26,6 +26,12 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'verifiedphonenumber'])->name('dashboard');
+
+Route::get('/verify-phone-number', 'App\Http\Controllers\Auth\VerifyPhoneNumberController@createPhoneVerification')->middleware('auth')
+->name('phoneverification.notice');
+
+Route::post('/verify-phone-number', 'App\Http\Controllers\Auth\VerifyPhoneNumberController@verifyPhoneNumber')->middleware('auth')
+->name('phoneverification.verify');
 
 require __DIR__.'/auth.php';

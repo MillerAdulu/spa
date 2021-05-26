@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
+use App\Events\TradingAccountActivation;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Session;
 
 class VerifyEmailController extends Controller
 {
@@ -23,8 +25,12 @@ class VerifyEmailController extends Controller
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
-        }
+        } 
 
+        event(new TradingAccountActivation($request->user()));
+        
+        Session::flash('message', 'Email successfully verified!');
         return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
+           
     }
 }
