@@ -21,13 +21,34 @@ class LoginRequest extends FormRequest
         return true;
     }
 
+    // /**
+    //  * Get the login username to be used by the controller.
+    //  *
+    //  * @return string
+    //  */
+    // public function username()
+    // {
+    //     // $login = request()->input('username');
+
+    //     // if(filter_var($login, FILTER_VALIDATE_EMAIL)) {
+
+    //     //     return 'email';
+            
+    //     // } else {
+
+    //     //     return 'mobile_phone_number';
+    //     // }
+
+    //     return 'email';
+    //}
+
     /**
-     * Get the validation rules that apply to the request.
      *
      * @return array
      */
     public function rules()
     {
+
         return [
             'email' => 'required|string|email',
             //'email' || 'mobile_phone_number' => 'required|string',
@@ -75,7 +96,7 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited()
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) { //and if used email, do for if use phone
             return;
         }
 
@@ -96,7 +117,7 @@ class LoginRequest extends FormRequest
      *
      * @return string
      */
-    public function throttleKey()
+    public function throttleKey() //account for if use phone
     {
         return Str::lower($this->input('email')).'|'.$this->ip();
     }

@@ -36,7 +36,8 @@ var el = document.getElementById('app');
 }).use(_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.plugin).mount(el);
 _inertiajs_progress__WEBPACK_IMPORTED_MODULE_2__.InertiaProgress.init({
   color: '#4B5563'
-});
+}); //Vue.config.devtools = true
+//createApp.config.devtools = true
 
 /***/ }),
 
@@ -72,9 +73,16 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__.default({
   broadcaster: 'pusher',
   key: "75776d8b6015bf99040b",
   cluster: "eu",
-  forceTLS: true
-});
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+  forceTLS: true,
+  authEndpoint: '/broadcasting/auth' // auth: {
+  //     headers: {
+  //         'X-CSRF-TOKEN': '{{ csrf_token() }}',
+  //     }
+  // }
+
+}); // import Vue from 'vue';
+// window.Vue = require('vue');
+// Vue.config.devtools = true;
 
 /***/ }),
 
@@ -190,6 +198,16 @@ function webpackAsyncContext(req) {
 webpackAsyncContext.keys = () => (Object.keys(map));
 webpackAsyncContext.id = "./resources/js/Pages lazy recursive ^\\.\\/.*$";
 module.exports = webpackAsyncContext;
+
+/***/ }),
+
+/***/ "?4f7e":
+/*!********************************!*\
+  !*** ./util.inspect (ignored) ***!
+  \********************************/
+/***/ (() => {
+
+/* (ignored) */
 
 /***/ })
 

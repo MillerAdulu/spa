@@ -4,11 +4,10 @@
     <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
         {{ status }}
     </div>
-
     <form @submit.prevent="submit">
         <div>
             <breeze-label for="email" value="Email" />
-            <breeze-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus autocomplete="username" />
+            <breeze-input id="email" type="text" class="mt-1 block w-full" v-model="form.email" required autofocus autocomplete="username" />
         </div>
 
         <div class="mt-4">
@@ -23,14 +22,19 @@
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <inertia-link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900">
-                Forgot your password?
+        <div class="block mt-4">
+            <inertia-link :href="route('register')" class="underline text-sm text-gray-600 hover:text-gray-900">
+                Don't have an account?
             </inertia-link>
+        </div>
 
+        <div class="flex items-center justify-end mt-4">
+             <inertia-link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900">
+                Forgot your password?
+            </inertia-link>     
             <breeze-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Log in
-            </breeze-button>
+            </breeze-button>  
         </div>
     </form>
 </template>
@@ -42,8 +46,10 @@
     import BreezeCheckbox from '@/Components/Checkbox'
     import BreezeLabel from '@/Components/Label'
     import BreezeValidationErrors from '@/Components/ValidationErrors'
-
+   
     export default {
+        inheritAttrs: false,
+        
         layout: BreezeGuestLayout,
 
         components: {
@@ -51,7 +57,7 @@
             BreezeInput,
             BreezeCheckbox,
             BreezeLabel,
-            BreezeValidationErrors
+            BreezeValidationErrors,
         },
 
         props: {
@@ -67,7 +73,7 @@
                     remember: false
                 })
             }
-        },
+        },  
 
         methods: {
             submit() {

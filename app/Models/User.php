@@ -8,9 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use App\Contracts\MustVerifyPhoneNumber;
+use App\Contracts\MustAcceptTerms;
 use Lab404\Impersonate\Models\Impersonate;
 
-class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNumber
+class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNumber, MustAcceptTerms
 {
     use HasFactory, Notifiable;
     
@@ -27,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
         'phone_number_isVerified',
         'email',
         'password',
+        'terms',
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -121,6 +123,16 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
     public function routeNotificationForSms($notification)
     {
         return $this->mobile_phone_number;
+    }
+
+     /**
+     * Set 'phone_number_isVerified' to true.
+     *
+     * @return bool
+     */
+    public function hasAcceptedTerms()
+    {
+        return  $this->forceFill(['terms' => true])->save();
     }
 
     protected  static  function  boot()

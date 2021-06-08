@@ -16,3 +16,8 @@ declare module 'vue-notification-bell' {
 declare module 'lodash' {
   
 }
+
+declare module '@pwabuilder/pwainstall' {
+  import { pwainstall } from '@pwabuilder/pwainstall'
+  export { pwainstall }
+}

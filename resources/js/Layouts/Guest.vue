@@ -6,18 +6,23 @@
             </inertia-link>
         </div>
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+        <div v-bind="$attrs" class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <flash-message />
             <slot />
-        </div>
+        </div>    
     </div>
 </template>
 
 <script>
     import BreezeApplicationLogo from '@/Components/ApplicationLogo'
+    import FlashMessage from '@/Components/FlashMessage'
 
     export default {
+        inheritAttrs: false,
+        
         components: {
             BreezeApplicationLogo,
+            FlashMessage,
         }
     }
 </script>

@@ -27,6 +27,8 @@
     import BreezeValidationErrors from '@/Components/ValidationErrors'
 
     export default {
+        inheritAttrs: false,
+        
         layout: BreezeGuestLayout,
 
         components: {

@@ -29,7 +29,7 @@ class VerifyEmailController extends Controller
 
         event(new TradingAccountActivation($request->user()));
         
-        Session::flash('message', 'Email successfully verified!');
+        Session::flash('success', 'Email successfully verified!');
         return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
            
     }

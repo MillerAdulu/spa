@@ -19,7 +19,6 @@ class TradingAccountActivation implements ShouldBroadcast
      * @var \Illuminate\Contracts\Auth\Authenticatable
      */
     public $user;
-    public $message;
 
     /**
      * Create a new event instance.
@@ -30,7 +29,6 @@ class TradingAccountActivation implements ShouldBroadcast
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->message =  "Hi {$user->first_name}, you're now set to trade";
     }
 
     /**
@@ -38,10 +36,12 @@ class TradingAccountActivation implements ShouldBroadcast
     *
     * @return array
     */
-    public function broadcastWith()
-    {
-        return ['message' => $this->user->message];
-    }
+    // public function broadcastWith()
+    // {
+    //     return ['message' => $this->user->message,
+    //              'id' => $this->user->id
+    //     ];
+    // }
 
     /**
      * Get the channels the event should broadcast on.

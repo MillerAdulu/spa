@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Propaganistas\LaravelPhone\PhoneNumber;
+use Illuminate\Support\Facades\Session;
 
 class RegisteredUserController extends Controller
 {
@@ -39,6 +40,7 @@ class RegisteredUserController extends Controller
             'mobile_phone_number' => 'required|string|min:11|max:15|unique:users|phone:NG,mobile',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:12',
+            'terms' => 'required',
         ]);
 
         $formatedphonenumber = PhoneNumber::make($request['mobile_phone_number'], 'NG')->formatE164();
@@ -49,10 +51,12 @@ class RegisteredUserController extends Controller
             'mobile_phone_number' => $formatedphonenumber,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'terms' => $request->terms,
         ]));
 
         event(new Registered($user));
-        return redirect('/verify-phone-number')->with(['status' => session('status'), 'phone' => $formatedphonenumber]);
+        Session::flash('success', 'Registration successfully completed!');
+        return redirect('/verify-phone-number')->with(['phone' => $formatedphonenumber]);
         
     }
 }

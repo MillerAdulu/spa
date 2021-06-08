@@ -8,6 +8,7 @@ import { InertiaProgress } from '@inertiajs/progress'
 
 const el = document.getElementById('app');
 
+
 createApp({
     render: () =>
         h(InertiaApp, {
@@ -20,3 +21,5 @@ createApp({
     .mount(el);
 
 InertiaProgress.init({ color: '#4B5563' });
+//Vue.config.devtools = true
+//createApp.config.devtools = true

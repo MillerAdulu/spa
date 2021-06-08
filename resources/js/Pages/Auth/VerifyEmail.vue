@@ -23,6 +23,8 @@
     import BreezeGuestLayout from "@/Layouts/Guest"
 
     export default {
+        inheritAttrs: false,
+        
         layout: BreezeGuestLayout,
 
         components: {

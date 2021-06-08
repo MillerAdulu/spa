@@ -21,7 +21,7 @@ class TradingAccountActivated extends Notification implements ShouldQueue
      * @var \App\Models\User
      */
     public $user;
-    public $message;
+
     /**
      * Create a new notification instance.
      *
@@ -29,8 +29,7 @@ class TradingAccountActivated extends Notification implements ShouldQueue
      */
     public function __construct(User $user)
     {
-        $this->user = $user;
-        $this->message = "Hi {$user->first_name}, you're now set to trade";
+        $this->user = $user; //how to pass user information into email, sms & broadcast without making public or defining it. e.g. $user->first_name
     }
 
     /**
@@ -41,7 +40,7 @@ class TradingAccountActivated extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'broadcast', SmsNotificationChannel::class];
+    return ['mail', 'broadcast'/*, SmsNotificationChannel::class*/];
     }
 
     /**
@@ -80,10 +79,10 @@ class TradingAccountActivated extends Notification implements ShouldQueue
     public function toBroadcast($notifiable)
     {
 
-        // return (new BroadcastMessage)
-        // ->message("Hi {$this->user->first_name}, you're now set to trade");
+        // return (new BroadcastMessage) //both ways correct
+        // ->message("Hi, you're now set to trade");
         return new BroadcastMessage([
-            'message' => $this->message,
+            'message' => "Hi, you're now set to trade"
         ]);
     }
 
@@ -95,11 +94,11 @@ class TradingAccountActivated extends Notification implements ShouldQueue
     public function toSms($notifiable)
     {
 
-        return (new SmsMessage)
-        ->notificationmessage("Hi {$this->user->first_name}, you're now set to trade");
+        // return (new SmsMessage) //both ways work
+        // ->notificationmessage("Hi, you're now set to trade");
 
         // return new SmsMessage([
-        //     'notificationmessage' => $this->message,
+        //     'notificationmessage' => "Hi, you're now set to trade"
         // ]);
     }
 

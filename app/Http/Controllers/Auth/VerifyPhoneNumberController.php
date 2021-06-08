@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Contracts\PhoneVerificationService;
 use Inertia\Inertia;
 use App\Http\Controllers\SmsController;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Auth\Events\Verified;
+use App\Events\TradingAccountActivation;
+
 
 class TwilioVerificationService implements PhoneVerificationService
 {
@@ -32,7 +36,7 @@ class TwilioVerificationService implements PhoneVerificationService
         CURLOPT_POSTFIELDS => $postdata,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_HTTPHEADER => $headers));
-    
+     
         $response = curl_exec($ch);
         $err = curl_error($ch);
         curl_close($ch);
@@ -110,8 +114,8 @@ class SmsVerificationService implements PhoneVerificationService
         $message = 'Your verification code is:' . $code;
         $phoneNumber = $formatedphonenumber;
 
-        $sendverificationmessage = new SmsController;
-        $sendverificationmessage->sendSms($phoneNumber, $message);
+        // $sendverificationmessage = new SmsController;
+        // $sendverificationmessage->sendSms($phoneNumber, $message);
     }
 
     public function verifyPhoneNumber(Request $request)
@@ -151,7 +155,7 @@ class VerifyPhoneNumberController extends Controller
             $createphoneverification = new SmsVerificationService;
             $createphoneverification->createPhoneVerification($request);
              
-            return Inertia::render('Auth/VerifyPhoneNumber', ['status' => session('status'), 'phone' => $formatedphonenumber]);    
+            return Inertia::render('Auth/VerifyPhoneNumber', ['phone' => $formatedphonenumber]);    
  
         }
 
@@ -162,13 +166,13 @@ class VerifyPhoneNumberController extends Controller
         //     $createphoneverification = new TwilioVerificationService;
         //     $createphoneverification->createPhoneVerification($request);
             
-        //     return Inertia::render('Auth/VerifyPhoneNumber', ['status' => session('status'), 'phone' => $formatedphonenumber]);    
+        //     return Inertia::render('Auth/VerifyPhoneNumber', ['phone' => $formatedphonenumber]);    
 
         // }
         
         else {
 
-            return Inertia::render('Auth/VerifyPhoneNumber', ['status' => session('status'), 'phone' => $formatedphonenumber]);    
+            return Inertia::render('Auth/VerifyPhoneNumber', ['phone' => $formatedphonenumber]);    
 
         }
       
@@ -192,12 +196,15 @@ class VerifyPhoneNumberController extends Controller
 
         if ($request->user()->hasVerifiedPhoneNumber()) {
 
+            event(new Verified($request->user()));
+            event(new TradingAccountActivation($request->user()));
+            Session::flash('success', 'Phone number successfully verified!');
             return redirect('/dashboard');
 
         } else {
 
-            //return redirect()->back()->flash('error', 'Invalid input');
-            return redirect()->back()->with(['status' => session('status'),'phone' => $formatedphonenumber, 'error' => 'Invalid input']);
+            Session::flash('error', 'Invalid input!');
+            return redirect()->back()->with(['phone' => $formatedphonenumber]);
         }
         
     }

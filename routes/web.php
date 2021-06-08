@@ -34,4 +34,6 @@ Route::get('/verify-phone-number', 'App\Http\Controllers\Auth\VerifyPhoneNumberC
 Route::post('/verify-phone-number', 'App\Http\Controllers\Auth\VerifyPhoneNumberController@verifyPhoneNumber')->middleware('auth')
 ->name('phoneverification.verify');
 
+Route::get('pusher/auth', 'PusherController@pusherAuth');
+
 require __DIR__.'/auth.php';
