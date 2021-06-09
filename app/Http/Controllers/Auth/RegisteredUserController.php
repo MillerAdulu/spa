@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
-use Propaganistas\LaravelPhone\PhoneNumber;
 use Illuminate\Support\Facades\Session;
 
 class RegisteredUserController extends Controller
@@ -43,12 +42,10 @@ class RegisteredUserController extends Controller
             'terms' => 'required',
         ]);
 
-        $formatedphonenumber = PhoneNumber::make($request['mobile_phone_number'], 'NG')->formatE164();
-
         Auth::login($user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'mobile_phone_number' => $formatedphonenumber,
+            'mobile_phone_number' => $request->mobile_phone_number,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'terms' => $request->terms,
@@ -56,7 +53,7 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
         Session::flash('success', 'Registration successfully completed!');
-        return redirect('/verify-phone-number')->with(['phone' => $formatedphonenumber]);
+        return redirect('/verify-phone-number')->with(['phone' => $request['mobile_phone_number']]);
         
     }
 }

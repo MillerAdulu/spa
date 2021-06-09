@@ -16,10 +16,10 @@ class SmsNotificationChannel
     public function send($notifiable, Notification $notification)
     {
         $message = $notification->toSms($notifiable);
-        $phoneNumber = $notifiable->routeNotificationFor('Sms');
+        $userPhoneNumber = $notifiable->routeNotificationFor('Sms');
         
         //format phone number for Twilio service
-        //$phoneNumber = PhoneNumber::make($phoneNumber, 'NG')->formatE164();
+        $phoneNumber = PhoneNumber::make($userPhoneNumber, 'NG')->formatE164();
         
         $smsnotification = new SmsController;
         $smsnotification->sendSms($phoneNumber, $message->notificationmessage);

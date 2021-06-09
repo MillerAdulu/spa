@@ -10,14 +10,16 @@ use App\Http\Controllers\SmsController;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Auth\Events\Verified;
 use App\Events\TradingAccountActivation;
+use Propaganistas\LaravelPhone\PhoneNumber;
 
 
 class TwilioVerificationService implements PhoneVerificationService
 {
     public function createPhoneVerification(Request $request)
     {
-        // Get user phone number to be verified.
-        $formatedphonenumber = $request->user()->getPhoneNumberForVerification();
+        // Get user phone number to be verified and format it.
+        $request['mobile_phone_number'] = $request->user()->getPhoneNumberForVerification();
+        $formatedphonenumber = PhoneNumber::make($request['mobile_phone_number'], 'NG')->formatE164();
 
         /* Get credentials from .env */
         
@@ -57,8 +59,9 @@ class TwilioVerificationService implements PhoneVerificationService
     public function verifyPhoneNumber(Request $request)
     {
 
-        // Get user phone number to be verified.
-        $formatedphonenumber = $request->user()->getPhoneNumberForVerification();
+        // Get user phone number to be verified and format it.
+        $request['mobile_phone_number'] = $request->user()->getPhoneNumberForVerification();
+        $formatedphonenumber = PhoneNumber::make($request['mobile_phone_number'], 'NG')->formatE164();
 
         /* Get credentials from .env */
         
@@ -109,13 +112,14 @@ class SmsVerificationService implements PhoneVerificationService
         $code = $request->user()->getVerificationCode();
 
         // Get user phone number to be verified.
-        $formatedphonenumber = $request->user()->getPhoneNumberForVerification();
+        $request['mobile_phone_number'] = $request->user()->getPhoneNumberForVerification();
+        $formatedphonenumber = PhoneNumber::make($request['mobile_phone_number'], 'NG')->formatE164();
 
         $message = 'Your verification code is:' . $code;
         $phoneNumber = $formatedphonenumber;
 
-        // $sendverificationmessage = new SmsController;
-        // $sendverificationmessage->sendSms($phoneNumber, $message);
+        $sendverificationmessage = new SmsController;
+        $sendverificationmessage->sendSms($phoneNumber, $message);
     }
 
     public function verifyPhoneNumber(Request $request)
@@ -144,7 +148,7 @@ class VerifyPhoneNumberController extends Controller
     {
 
         // Get user phone number to be verified.
-        $formatedphonenumber = $request->user()->getPhoneNumberForVerification();
+        $request['mobile_phone_number'] = $request->user()->getPhoneNumberForVerification();
 
         // If using SmsVerificationService and it's a fresh request, create verification code to send to user
         // otherwise just redirect to page with message.
@@ -155,12 +159,15 @@ class VerifyPhoneNumberController extends Controller
             $createphoneverification = new SmsVerificationService;
             $createphoneverification->createPhoneVerification($request);
              
-            return Inertia::render('Auth/VerifyPhoneNumber', ['phone' => $formatedphonenumber]);    
+            return Inertia::render('Auth/VerifyPhoneNumber', ['phone' => $request['mobile_phone_number']]);    
  
         }
 
+        // Get user phone number to be verified and format.
+        //$request['mobile_phone_number'] = $request->user()->getPhoneNumberForVerification();
+
         // If using TwilioVerificationService and its a fresh request, proceed, else redirect to page with message.
-        
+
         // if ($request->header('referer') === 'http://127.0.0.1:8000/register') {
     
         //     $createphoneverification = new TwilioVerificationService;
@@ -172,7 +179,7 @@ class VerifyPhoneNumberController extends Controller
         
         else {
 
-            return Inertia::render('Auth/VerifyPhoneNumber', ['phone' => $formatedphonenumber]);    
+            return Inertia::render('Auth/VerifyPhoneNumber', ['phone' => $request['mobile_phone_number']]);    
 
         }
       
@@ -189,8 +196,9 @@ class VerifyPhoneNumberController extends Controller
             'mobile_phone_number' => ['required', 'string'],
         ]);
 
-        $formatedphonenumber = $request['mobile_phone_number'];
         //$verifyphonenumber = new TwilioVerificationService;
+        //$verifyphonenumber->verifyPhoneNumber($request);
+
         $verifyphonenumber = new SmsVerificationService;
         $verifyphonenumber->verifyPhoneNumber($request);
 
@@ -204,7 +212,7 @@ class VerifyPhoneNumberController extends Controller
         } else {
 
             Session::flash('error', 'Invalid input!');
-            return redirect()->back()->with(['phone' => $formatedphonenumber]);
+            return redirect()->back()->with(['phone' => $request['mobile_phone_number']]);
         }
         
     }
