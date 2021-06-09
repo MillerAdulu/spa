@@ -21,26 +21,28 @@ class LoginRequest extends FormRequest
         return true;
     }
 
-    // /**
-    //  * Get the login username to be used by the controller.
-    //  *
-    //  * @return string
-    //  */
-    // public function username()
-    // {
-    //     // $login = request()->input('username');
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        $login = request()->input('username');
 
-    //     // if(filter_var($login, FILTER_VALIDATE_EMAIL)) {
+        if(filter_var($login, FILTER_VALIDATE_EMAIL)) {
 
-    //     //     return 'email';
+          $field = 'email';
             
-    //     // } else {
+        } else {
 
-    //     //     return 'mobile_phone_number';
-    //     // }
+            $field = 'mobile_phone_number';
+        }
 
-    //     return 'email';
-    //}
+        request()->merge([$field => $login]);
+
+        return $field;
+    }
 
     /**
      *
@@ -50,9 +52,8 @@ class LoginRequest extends FormRequest
     {
 
         return [
-            'email' => 'required|string|email',
-            //'email' || 'mobile_phone_number' => 'required|string',
-            //'mobile_phone_number' => 'required|string',
+            'email' => 'string|email',
+            'mobile_phone_number' => 'string',
             'password' => 'required|string',
         ];
     }
@@ -68,21 +69,22 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->filled('remember'))) {
+        if ( $this->username() === 'email') {
+
+            $credentials = ['email', 'password'];
+
+        } else {
+
+            $credentials = ['mobile_phone_number', 'password'];
+        }
+
+        if (! Auth::attempt($this->only($credentials), $this->filled('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'username' => __('auth.failed'),
             ]);
         }
-
-        // elseif (! Auth::attempt($this->only('mobile_phone_number', 'password'), $this->filled('remember'))) {
-        //     RateLimiter::hit($this->throttleKey());
-
-        //     throw ValidationException::withMessages([
-        //         'mobile_phone_number' => __('auth.failed'),
-        //     ]);
-        // }
 
         RateLimiter::clear($this->throttleKey());
     }
@@ -96,7 +98,7 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited()
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) { //and if used email, do for if use phone
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
@@ -105,7 +107,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
+            'username' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -117,8 +119,8 @@ class LoginRequest extends FormRequest
      *
      * @return string
      */
-    public function throttleKey() //account for if use phone
+    public function throttleKey()
     {
-        return Str::lower($this->input('email')).'|'.$this->ip();
+        return Str::lower($this->input('username')).'|'.$this->ip();
     }
 }

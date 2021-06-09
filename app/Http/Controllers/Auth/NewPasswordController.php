@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class NewPasswordController extends Controller
 {
@@ -39,7 +40,7 @@ class NewPasswordController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|string|confirmed|min:8',
+            'password' => 'required|string|confirmed|min:12',
         ]);
 
         // Here we will attempt to reset the user's password. If it is successful we
@@ -58,9 +59,10 @@ class NewPasswordController extends Controller
         );
 
         // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
-        // redirect them back to where they came from with their error message.
+        // the application's home authenticated view.  [And logout other devices] 
+        // If there is an error we can redirect them back to where they came from with their error message.
         if ($status == Password::PASSWORD_RESET) {
+            Auth::logoutOtherDevices();
             return redirect()->route('login')->with('status', __($status));
         }
 
