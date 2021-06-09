@@ -62,7 +62,7 @@ class NewPasswordController extends Controller
         // the application's home authenticated view.  [And logout other devices] 
         // If there is an error we can redirect them back to where they came from with their error message.
         if ($status == Password::PASSWORD_RESET) {
-            Auth::logoutOtherDevices();
+            Auth::logoutOtherDevices($request->password);
             return redirect()->route('login')->with('status', __($status));
         }
 
