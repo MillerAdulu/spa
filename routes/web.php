@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\Auth\VerifyPhoneNumberController;
+use App\Http\Controllers\PusherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,12 +30,15 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified', 'verifiedphonenumber'])->name('dashboard');
 
-Route::get('/verify-phone-number', 'App\Http\Controllers\Auth\VerifyPhoneNumberController@createPhoneVerification')->middleware('auth')
+Route::get('/verify-phone-number', [VerifyPhoneNumberController::class, 'createPhoneVerification'])
+->middleware('auth')
 ->name('phoneverification.notice');
 
-Route::post('/verify-phone-number', 'App\Http\Controllers\Auth\VerifyPhoneNumberController@verifyPhoneNumber')->middleware('auth')
+Route::post('/verify-phone-number', [VerifyPhoneNumberController::class, 'verifyPhoneNumber'])
+->middleware('auth')
 ->name('phoneverification.verify');
 
-Route::get('pusher/auth', 'PusherController@pusherAuth');
+Route::post('/pusher/auth', [PusherController::class, 'pusherAuth'])
+->middleware('auth');
 
 require __DIR__.'/auth.php';

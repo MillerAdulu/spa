@@ -22,20 +22,17 @@ class PusherController extends Controller
         $app_id = getenv('PUSHER_APP_ID');
 
         if ($user) {
+     
             $pusher = new Pusher($key, $secret, $app_id);
-            $auth= $pusher->socket_auth($request['channel_name'], $request['socket_id']); 
-            $callback = str_replace('\\', '', $request['callback']);
-            header('Content-Type: application/javascript');
-            echo($callback . '(' . $auth . ');');
-            return;
-            // $pusher->socket_auth($request['channel_name'], $request['socket_id']); 
-            // $string_to_sign = $socket_id.':'.$channel_name;
-            // $signature = hash_hmac('sha256', $string_to_sign, $secret);
-            // return response()->json(['auth' => $key.':'.$signature]);
-        }else {
+            $auth = $pusher->socket_Auth($channel_name, $socket_id);
+
+            return response($auth, 200);
+
+        } else {
             header('', true, 403);
             echo "Forbidden";
             return;
         }
     }
 }
+

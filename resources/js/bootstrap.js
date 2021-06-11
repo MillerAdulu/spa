@@ -28,12 +28,12 @@ window.Echo = new Echo({
     key: process.env.MIX_PUSHER_APP_KEY,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     forceTLS: true,
-    authEndpoint: '/broadcasting/auth',
-    // auth: {
-    //     headers: {
-    //         'X-CSRF-TOKEN': '{{ csrf_token() }}',
-    //     }
-    // }
+    authEndpoint: '/pusher/auth',
+    auth: {
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        }
+    }
 });
 
 // import Vue from 'vue';

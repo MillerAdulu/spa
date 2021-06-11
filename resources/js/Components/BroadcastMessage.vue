@@ -8,6 +8,8 @@
 export default {
     name: 'BroadcastMessage',
 
+    //props: ['message'],
+
     data() {
         return {
             body: '',
@@ -15,41 +17,44 @@ export default {
         }
     },
 
-    // methods: {
-    //     Listen() {
-    //         Echo.private(`user.${this.$page.props.auth.user.id}`)
+    // mounted() {
+    //     window.Echo.private(`user.${this.$page.props.auth.user.id}`)
     //             .notification((notification) => {
-    //                 if (notification.data.message) {
-    //                     body = this.notification.data.message,
-    //                     show = true
-    //                 }   
-    //         });
+    //                 this.body = notification.message,
+    //                 this.show = true
+    //                 console.log(this.notification.message)
+    //                 });
+    // },
+
+    // methods: {
+    //     Test() {
+    //         this.body = 'Test',
+    //         this.show = true
+    //         console.log(this.body)
     //     }
     // },
-    
-    // mounted() {
-    //     this.Listen();
-    //     console.log(this.Listen);
+
+    // created() {
+    //     this.Test();
     // },
 
     methods: {
-        ListenForChanges() {
+        Listen() {
             Echo.private(`user.${this.$page.props.auth.user.id}`)
-                .listen('TradingAccountActivation', (e) => {
-                    //console.log(this.e.message)
-                    if (e.message) {
-                        body = e.message,
-                        show = true
-                    }    
-                });
+                .notification((notification) => {
+                    if (notification) {
+                        this.body = notification.message,
+                        this.show = true
+                        console.log(this.notification.message)
+                    }
+
+                    console.log('No message')
+            });
         }
-
     },
-
+    
     created() {
-        this.ListenForChanges();
-        console.log(this.ListenForChanges);
+        this.Listen();
     }
-
 }
 </script>
