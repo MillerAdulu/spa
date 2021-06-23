@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         //App\Providers\TelescopeServiceProvider::class,
         //Aloha\Twilio\Support\Laravel\ServiceProvider::class,
+        //Nexmo\Laravel\NexmoServiceProvider::class,
 
     ],
 
@@ -229,6 +230,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         //'Twilio' => Aloha\Twilio\Support\Laravel\Facade::class,
+        //'Nexmo' => Nexmo\Laravel\Facade\Nexmo::class,
+
     ],
 
 ];

@@ -13,41 +13,64 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'BroadcastMessage',
+  props: ['message'],
   data: function data() {
     return {
       body: '',
       show: false
     };
-  },
-  // methods: {
-  //     Listen() {
-  //         Echo.private(`user.${this.$page.props.auth.user.id}`)
+  } // mounted() {
+  //     window.EchoService.init().private(`user.${this.$page.props.auth.user.id}`)
+  //             // .listen('TradingAccountActivation', (e) => {
+  //             .listen('.my-event', (e) => {
+  //                 this.body = e.id,
+  //                 this.show = true,
+  //                 console.log(e.id)
+  //             })
   //             .notification((notification) => {
-  //                 if (notification.data.message) {
-  //                     body = this.notification.data.message,
-  //                     show = true
-  //                 }   
-  //         });
-  //     }
+  //                 console.log(notification)
+  //             });
+  // },
+  // destroyed() {
+  //     window.EchoService.init().leave(`user.${this.$page.props.auth.user.id}`);
   // },
   // mounted() {
-  //     this.Listen();
-  //     console.log(this.Listen);
+  //      window.Echo.private(`user.${this.$page.props.auth.user.id}`)
+  //               .listen('TradingAccountActivation', (e) => {
+  //                  this.body = e.id,
+  //                  this.show = true,
+  //                  console.log(e.id)
+  //               });
   // },
-  methods: {
-    ListenForChanges: function ListenForChanges() {
-      Echo["private"]("user.".concat(this.$page.props.auth.user.id)).listen('TradingAccountActivation', function (e) {
-        //console.log(this.e.message)
-        if (e.message) {
-          body = e.message, show = true;
-        }
-      });
-    }
-  },
-  created: function created() {
-    this.ListenForChanges();
-    console.log(this.ListenForChanges);
-  }
+  // methods: {
+  //     Test() {
+  //         this.body = 'Test',
+  //         this.show = true
+  //         console.log(this.body)
+  //     }
+  // },
+  // created() {
+  //     this.Test();
+  // },
+  // methods: {
+  //     Listen() {
+  //         window.Echo.private(`user.${this.$page.props.auth.user.id}`)
+  //             .listen('.TradingAccountActivation', (e) => {
+  //                 this.body = e.id,
+  //                 this.show = true,
+  //                 console.log(e.id)
+  //             })
+  //             .notification((notification) => {
+  //                 this.body = notification.data.message,
+  //                 this.show = true,
+  //                 console.log(notification.type)   
+  //             });
+  //     }
+  // },
+  // created() {
+  //     this.Listen();
+  // }
+
 });
 
 /***/ }),
@@ -246,6 +269,14 @@ __webpack_require__.r(__webpack_exports__);
     return {
       showingNavigationDropdown: false
     };
+  },
+  mounted: function mounted() {
+    window.EchoService.init()["private"]("user.".concat(this.$page.props.auth.user.id)); // .notification((notification) => {
+    //     console.log(notification)
+    // });
+  },
+  destroyed: function destroyed() {
+    window.EchoService.init().leave("user.".concat(this.$page.props.auth.user.id));
   }
 });
 
@@ -268,7 +299,37 @@ __webpack_require__.r(__webpack_exports__);
   inheritAttrs: false,
   components: {
     BreezeAuthenticatedLayout: _Layouts_Authenticated__WEBPACK_IMPORTED_MODULE_0__.default
-  }
+  } // mounted() {
+  //     window.EchoService.init().private(`user.${this.$page.props.auth.user.id}`)
+  //         // .notification((notification) => {
+  //         //     console.log(notification)
+  //         // });
+  // },
+  // destroyed() {
+  //     window.EchoService.init().leave(`user.${this.$page.props.auth.user.id}`);
+  // },
+  // methods: {
+  //     Listen() {
+  //         window.EchoService.init().private(`user.${this.$page.props.auth.user.id}`)
+  //             .listen('.TradingAccountActivation', (e) => {
+  //                 // this.body = e.id,
+  //                 // this.show = true,
+  //                 console.log(e.id)
+  //             })
+  //             .notification((notification) => {
+  //                 // this.body = notification.data.message,
+  //                 // this.show = true,
+  //                 console.log(notification.type)   
+  //             });
+  //     }
+  // },
+  // created() {
+  //     this.Listen();
+  // },
+  // destroyed() {
+  //     this.Listen();
+  // },
+
 });
 
 /***/ }),
@@ -817,7 +878,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["href"])])])], 2
   /* CLASS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Page Heading "), _ctx.$slots.header ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("header", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "header")])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Page Content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_flash_message), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_broadcast_message), (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")])])]);
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Page Heading "), _ctx.$slots.header ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("header", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "header")])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Page Content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_flash_message), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_broadcast_message, {
+    message: $props.message
+  }, null, 8
+  /* PROPS */
+  , ["message"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")])])]);
 }
 
 /***/ }),

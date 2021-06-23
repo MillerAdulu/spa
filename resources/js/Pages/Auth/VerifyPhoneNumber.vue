@@ -6,8 +6,9 @@
     <form @submit.prevent="submit">
         <div class="mt-4">
             <breeze-label for="code" value="Phone Verification Code" />
-            <breeze-input id="mobile_phone_number" type="hidden" :value="phone" class="mt-1 block w-full" name="form.mobile_phone_number" required autofocus autocomplete="mobile_phone_number" />
+            <breeze-input id="mobile_phone_number" type="hidden" :value="phone" class="mt-1 block w-full" name="form.mobile_phone_number" autofocus autocomplete="mobile_phone_number" />
             <breeze-input id="verification_code" type="text" class="mt-1 block w-full" v-model="form.verification_code" required autofocus autocomplete="verification_code" />
+            <breeze-input id="request_Id" type="hidden" :value="id" class="mt-1 block w-full" name="form.request_Id" autofocus autocomplete="request_Id" />
         </div>
         <div class="mt-4 flex items-center justify-between">
             <breeze-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
@@ -39,7 +40,8 @@ export default {
     },
 
     props: {
-        phone: String
+        phone: String,
+        id: String
     },
 
     data() {
@@ -47,14 +49,15 @@ export default {
             form: this.$inertia.form({
                 verification_code: '',
                 mobile_phone_number: '',
+                request_Id: '',
             })
         }
     },
 
     mounted() {
             
-        this.form.mobile_phone_number = document.getElementById("mobile_phone_number").value
-
+        this.form.mobile_phone_number = document.getElementById("mobile_phone_number").value,
+        this.form.request_Id = document.getElementById("request_Id").value
     },
 
     methods: {

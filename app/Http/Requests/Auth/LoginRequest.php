@@ -22,7 +22,7 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Get the login username to be used by the controller.
+     * Set login input to what user provided.
      *
      * @return string
      */
@@ -52,8 +52,8 @@ class LoginRequest extends FormRequest
     {
 
         return [
-            'email' => 'string|email',
-            'mobile_phone_number' => 'string',
+            'email' => 'sometimes|required|email',
+            'mobile_phone_number' => 'sometimes|required|string',
             'password' => 'required|string',
         ];
     }
@@ -87,6 +87,10 @@ class LoginRequest extends FormRequest
         }
 
         RateLimiter::clear($this->throttleKey());
+
+        $this->user()->userLastLogin();
+
+        $this->user()->setIsLoggedInToTrue();
     }
 
     /**

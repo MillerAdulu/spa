@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Session;
 
 class RegisteredUserController extends Controller
 {
@@ -48,12 +48,12 @@ class RegisteredUserController extends Controller
             'mobile_phone_number' => $request->mobile_phone_number,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'terms' => $request->terms,
         ]));
 
+        $request->user()->markTermsAsAccepted();
         event(new Registered($user));
-        Session::flash('success', 'Registration successfully completed!');
-        return redirect('/verify-phone-number')->with(['phone' => $request['mobile_phone_number']]);
+        // return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
+        return redirect('/verify-email');
         
     }
 }

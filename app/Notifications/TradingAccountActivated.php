@@ -38,9 +38,9 @@ class TradingAccountActivated extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable) // use vonage or custom channel with TwilioSms
     {
-    return ['mail', 'broadcast'/*, SmsNotificationChannel::class*/];
+    return ['mail', 'broadcast', 'database'/*, SmsNotificationChannel::class*/];
     }
 
     /**
@@ -52,7 +52,7 @@ class TradingAccountActivated extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Your trading account is now active.')
+                    ->line("Hi {$this->user->first_name}, your trading account is now active.")
                     ->action('Connect Your Brokerage Account', url('/'))
                     ->line('Happy Investing!');
     }
@@ -66,7 +66,7 @@ class TradingAccountActivated extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            //
+            'message' => "Hi {$this->user->first_name}, you're now set to trade"
         ];
     }
 
@@ -82,7 +82,7 @@ class TradingAccountActivated extends Notification implements ShouldQueue
         // return (new BroadcastMessage) //both ways correct
         // ->message("Hi, you're now set to trade");
         return new BroadcastMessage([
-            'message' => "Hi, you're now set to trade"
+            'message' => "Hi {$this->user->first_name}, you're now set to trade"
         ]);
     }
 
@@ -95,10 +95,10 @@ class TradingAccountActivated extends Notification implements ShouldQueue
     {
 
         // return (new SmsMessage) //both ways work
-        // ->notificationmessage("Hi, you're now set to trade");
+        // ->notificationmessage("Hi {$this->user->first_name}, you're now set to trade");
 
         // return new SmsMessage([
-        //     'notificationmessage' => "Hi, you're now set to trade"
+        //     'notificationmessage' => "Hi {$this->user->first_name}, you're now set to trade"
         // ]);
     }
 

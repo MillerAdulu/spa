@@ -69,18 +69,35 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js"); // Enable pusher logging - don't include this in production
 
 Pusher.logToConsole = true;
-window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__.default({
-  broadcaster: 'pusher',
-  key: "75776d8b6015bf99040b",
-  cluster: "eu",
-  forceTLS: true,
-  authEndpoint: '/broadcasting/auth' // auth: {
-  //     headers: {
-  //         'X-CSRF-TOKEN': '{{ csrf_token() }}',
-  //     }
-  // }
-
-}); // import Vue from 'vue';
+window.EchoService = {
+  // initialise echo instance/pusher connection only when and where called not on app launch and every page
+  init: function init() {
+    return new laravel_echo__WEBPACK_IMPORTED_MODULE_0__.default({
+      broadcaster: 'pusher',
+      key: "75776d8b6015bf99040b",
+      cluster: "eu",
+      forceTLS: true,
+      authEndpoint: '/pusher/auth',
+      auth: {
+        headers: {
+          'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        }
+      }
+    });
+  }
+}; // window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: process.env.MIX_PUSHER_APP_KEY,
+//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,1
+//     forceTLS: true,
+//     authEndpoint: '/pusher/auth',
+//     auth: {
+//         headers: {
+//             'X-CSRF-TOKEN': '{{ csrf_token() }}',
+//         }
+//     }
+// });
+// import Vue from 'vue';
 // window.Vue = require('vue');
 // Vue.config.devtools = true;
 

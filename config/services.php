@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'vonage' => [
+        'key'      => env('VONAGE_API_KEY'),
+        'secret'   => env('VONAGE_API_SECRET'),
+        'sms_from' => env('VONAGE_SEND_FROM'),
+    ],
 ];

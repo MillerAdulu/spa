@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
+use App\Events\TradingAccountActivation;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -36,7 +38,8 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
+        
+        // event(new TradingAccountActivation($request->user()));
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
@@ -48,11 +51,21 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
+        $user = $request->user(); //know user making logout request
+        $this->user = $user;
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
+        // Check all existing login session for this user and if none exists, set is_logged_in to false
+        $usersession = count(DB::table('sessions')->where('user_id', $this->user->id)->get());
+
+        if ($usersession == 0){
+            $this->user->setIsLoggedInToFalse(); 
+        }
 
         return redirect('/');
     }

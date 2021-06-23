@@ -171,18 +171,20 @@ __webpack_require__.r(__webpack_exports__);
     BreezeValidationErrors: _Components_ValidationErrors__WEBPACK_IMPORTED_MODULE_4__.default
   },
   props: {
-    phone: String
+    phone: String,
+    id: String
   },
   data: function data() {
     return {
       form: this.$inertia.form({
         verification_code: '',
-        mobile_phone_number: ''
+        mobile_phone_number: '',
+        request_Id: ''
       })
     };
   },
   mounted: function mounted() {
-    this.form.mobile_phone_number = document.getElementById("mobile_phone_number").value;
+    this.form.mobile_phone_number = document.getElementById("mobile_phone_number").value, this.form.request_Id = document.getElementById("request_Id").value;
   },
   methods: {
     submit: function submit() {
@@ -552,7 +554,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: $props.phone,
     "class": "mt-1 block w-full",
     name: "form.mobile_phone_number",
-    required: "",
     autofocus: "",
     autocomplete: "mobile_phone_number"
   }, null, 8
@@ -570,7 +571,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     autocomplete: "verification_code"
   }, null, 8
   /* PROPS */
-  , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breeze_button, {
+  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breeze_input, {
+    id: "request_Id",
+    type: "hidden",
+    value: $props.id,
+    "class": "mt-1 block w-full",
+    name: "form.request_Id",
+    autofocus: "",
+    autocomplete: "request_Id"
+  }, null, 8
+  /* PROPS */
+  , ["value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breeze_button, {
     "class": {
       'opacity-25': $data.form.processing
     },

@@ -36,12 +36,12 @@ class TradingAccountActivation implements ShouldBroadcast
     *
     * @return array
     */
-    // public function broadcastWith()
-    // {
-    //     return ['message' => $this->user->message,
-    //              'id' => $this->user->id
-    //     ];
-    // }
+    public function broadcastWith()
+    {
+        return [
+            'id' => $this->user->id
+        ];
+    }
 
     /**
      * Get the channels the event should broadcast on.
@@ -52,5 +52,13 @@ class TradingAccountActivation implements ShouldBroadcast
     {
         return new PrivateChannel('user.'.$this->user->id);
     }
-
+    /**
+    * The event's broadcast name.
+    *
+    * @return string
+    */
+    public function broadcastAs()
+    {
+        return 'my.event';
+    }
 }
