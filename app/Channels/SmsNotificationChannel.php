@@ -22,7 +22,7 @@ class SmsNotificationChannel
         $phoneNumber = PhoneNumber::make($userPhoneNumber, 'NG')->formatE164();
         
         $smsnotification = new SmsController;
-        $smsnotification->sendSms($phoneNumber, $message->notificationmessage);
+        $smsnotification->createSms($phoneNumber, $message->notificationmessage);
 
     }
 }
