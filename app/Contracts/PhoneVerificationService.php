@@ -10,13 +10,13 @@ interface PhoneVerificationService
     *
     * @return void
     */
-    public function createPhoneVerification(Request $request);
+    public function sendPhoneVerificationCode(Request $request);
 
    /**
     * Verify phone from the create phone verification step.
     *
     * @return void
     */
-    public function verifyPhoneNumber(Request $request);
+    public function verifyCode(Request $request);
  
 }

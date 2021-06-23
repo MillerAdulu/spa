@@ -4,138 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Contracts\PhoneVerificationService;
 use Inertia\Inertia;
-use App\Http\Controllers\SmsController;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Auth\Events\Verified;
-use App\Events\TradingAccountActivation;
-use Propaganistas\LaravelPhone\PhoneNumber;
+use App\VerificationServiceProviders\SpaVerification;
+use App\VerificationServiceProviders\TwilioVerification;
+use App\VerificationServiceProviders\VonageVerification;
 
-
-class TwilioVerificationService implements PhoneVerificationService
-{
-    public function createPhoneVerification(Request $request)
-    {
-        // Get user phone number to be verified and format it.
-        $request['mobile_phone_number'] = $request->user()->getPhoneNumberForVerification();
-        $formatedphonenumber = PhoneNumber::make($request['mobile_phone_number'], 'NG')->formatE164();
-
-        /* Get credentials from .env */
-        
-        $auth_token = getenv("TWILIO_AUTH_TOKEN");
-        $account_sid = getenv("TWILIO_ACCOUNT_SID");
-        $twilio_verify_sid = getenv("TWILIO_VERIFICATION_SID");
-        
-        $credentials = $account_sid . ":" . $auth_token;
-        $encodedcredentials = base64_encode($credentials);
-        $url ="https://verify.twilio.com/v2/Services/$twilio_verify_sid/Verifications";
-        $postdata = array('To' => $formatedphonenumber, 'Channel' => 'sms');
-        $headers = array("Authorization: Basic " . $encodedcredentials);
-        $ch = curl_init();
-        curl_setopt_array($ch, array(CURLOPT_URL => $url,
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => $postdata,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_HTTPHEADER => $headers));
-     
-        $response = curl_exec($ch);
-        $err = curl_error($ch);
-        curl_close($ch);
-        if ($response) {
-
-            $result = json_decode($response, true);
-
-            return $result;        
-        
-        } else {
-
-          return $err;
-
-        }
-
-    }
-
-    public function verifyPhoneNumber(Request $request)
-    {
-
-        // Get user phone number to be verified and format it.
-        $request['mobile_phone_number'] = $request->user()->getPhoneNumberForVerification();
-        $formatedphonenumber = PhoneNumber::make($request['mobile_phone_number'], 'NG')->formatE164();
-
-        /* Get credentials from .env */
-        
-        $auth_token = getenv("TWILIO_AUTH_TOKEN");
-        $account_sid = getenv("TWILIO_SID");
-        $twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
-       
-        $credentials = $account_sid . ":" . $auth_token;
-        $encodedcredentials = base64_encode($credentials);
-        $url ="https://verify.twilio.com/v2/Services/$twilio_verify_sid/VerificationCheck";
-        $postdata = array('To' => $formatedphonenumber, 'Code' => $request['verification_code']);
-        $headers = array("Authorization: Basic " . $encodedcredentials);
-        $ch = curl_init();
-        curl_setopt_array($ch, array(CURLOPT_URL => $url,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => $postdata,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HTTPHEADER => $headers));
-     
-        $response = curl_exec($ch);
-        $err = curl_error($ch);
-        curl_close($ch); 
-        if ($response) {
-
-           $result = json_decode($response, true);
-
-           return $result;
-
-        if ($result->valid) {
-
-            $request->user()->verifyPhoneNumber();
-            $request->user()->markPhoneAsVerified();
-
-           }
-           
-        } else {
-
-            return $err;
-        }
-    }
-}
-
-class SmsVerificationService implements PhoneVerificationService
-{
-    public function createPhoneVerification(Request $request)
-    {
-        //Retrieve code to send to user from db
-        $code = $request->user()->getVerificationCode();
-
-        // Get user phone number to be verified.
-        $request['mobile_phone_number'] = $request->user()->getPhoneNumberForVerification();
-        $formatedphonenumber = PhoneNumber::make($request['mobile_phone_number'], 'NG')->formatE164();
-
-        $message = 'Your verification code is:' . $code;
-        $phoneNumber = $formatedphonenumber;
-
-        $sendverificationmessage = new SmsController;
-        $sendverificationmessage->sendSms($phoneNumber, $message);
-    }
-
-    public function verifyPhoneNumber(Request $request)
-    {
-        //retrieve user's code from db and compare with what is provided.
-        $verification_code = $request->user()->getVerificationCode();
-        $userprovidedcode = $request['verification_code'];
-
-        if ($userprovidedcode === $verification_code) {
-
-            $request->user()->verifyPhoneNumber();
-            $request->user()->markPhoneAsVerified();
-
-        }
-    }
-}
 
 class VerifyPhoneNumberController extends Controller
 {
@@ -146,46 +21,54 @@ class VerifyPhoneNumberController extends Controller
      */
     public function createPhoneVerification(Request $request)
     {
-
         // Get user phone number to be verified.
         $request['mobile_phone_number'] = $request->user()->getPhoneNumberForVerification();
-
-        // If using SmsVerificationService and it's a fresh request, create verification code to send to user
-        // otherwise just redirect to page with message.
+        
+        // Check if call to @createPhoneVerification is a new request.
+        // Create a verification code if one doesn't exist
+        
         if ($request->user()->getVerificationCode() === null) {
 
             $request->user()->createPhoneNumberVerificationCode();
 
-            $createphoneverification = new SmsVerificationService;
-            $createphoneverification->createPhoneVerification($request);
+            $createphoneverification = new SpaVerification;
+            $createphoneverification->sendPhoneVerificationCode($request);
              
-            return Inertia::render('Auth/VerifyPhoneNumber', ['phone' => $request['mobile_phone_number']]);    
- 
+            return Inertia::render('Auth/VerifyPhoneNumber', ['phone' => $request['mobile_phone_number'], 'id' => $request['request_Id']]);    
         }
 
-        // Get user phone number to be verified and format.
-        //$request['mobile_phone_number'] = $request->user()->getPhoneNumberForVerification();
+        // Check if call to @createPhoneVerification is a new request.
+        // Create a request only if it is. 
 
-        // If using TwilioVerificationService and its a fresh request, proceed, else redirect to page with message.
-
-        // if ($request->header('referer') === 'http://127.0.0.1:8000/register') {
-    
-        //     $createphoneverification = new TwilioVerificationService;
-        //     $createphoneverification->createPhoneVerification($request);
+        // if ($request->header('referer') !== 'http://127.0.0.1:8000/verify-phone-number') {
+        
+        //     $createphoneverification = new TwilioVerification;
+        //     $createphoneverification->sendPhoneVerificationCode($request);
             
-        //     return Inertia::render('Auth/VerifyPhoneNumber', ['phone' => $formatedphonenumber]);    
+        //     return Inertia::render('Auth/VerifyPhoneNumber', ['phone' => $request['mobile_phone_number'], 'id' => $request['request_Id']]);
 
         // }
+
+        // Check if call to @createPhoneVerification is a new request.
+        // Create a request only if it is. 
+
+        // if ($request->header('referer') !== 'http://127.0.0.1:8000/verify-phone-number') {
         
+        //     $createphoneverification = new VonageVerification;
+        //     $createphoneverification->sendPhoneVerificationCode($request);
+        //     $request['request_Id'] = $createphoneverification->request_Id;
+            
+        //     return Inertia::render('Auth/VerifyPhoneNumber', ['phone' => $request['mobile_phone_number'], 'id' => $request['request_Id']]);
+
+        // }
+
         else {
-
-            return Inertia::render('Auth/VerifyPhoneNumber', ['phone' => $request['mobile_phone_number']]);    
-
+            return Inertia::render('Auth/VerifyPhoneNumber', ['phone' => $request['mobile_phone_number'], 'id' => $request['request_Id']]);
         }
-      
+        
     }
-
-  /**
+    
+    /**
      * Mark the authenticated user's phone number as verified
      * if phone verification checks out.
      */
@@ -194,25 +77,28 @@ class VerifyPhoneNumberController extends Controller
         $request->validate([
             'verification_code' => ['required', 'numeric'],
             'mobile_phone_number' => ['required', 'string'],
+            'request_Id' => ['nullable', 'alpha_num'],
         ]);
 
-        //$verifyphonenumber = new TwilioVerificationService;
-        //$verifyphonenumber->verifyPhoneNumber($request);
+        // $verifyphonenumber = new VonageVerification;
+        // $verifyphonenumber->verifyCode($request);      
+        
+        // $verifyphonenumber = new TwilioVerification;
+        // $verifyphonenumber->verifyCode($request);
 
-        $verifyphonenumber = new SmsVerificationService;
-        $verifyphonenumber->verifyPhoneNumber($request);
+        $verifyphonenumber = new SpaVerification;
+        $verifyphonenumber->verifyCode($request);
 
         if ($request->user()->hasVerifiedPhoneNumber()) {
 
             event(new Verified($request->user()));
-            event(new TradingAccountActivation($request->user()));
-            Session::flash('success', 'Phone number successfully verified!');
+            Session::flash('success', 'Your registration, email and phone verifications were successful!');
             return redirect('/dashboard');
 
         } else {
 
             Session::flash('error', 'Invalid input!');
-            return redirect()->back()->with(['phone' => $request['mobile_phone_number']]);
+            return redirect()->back()->with(['phone' => $request['mobile_phone_number'], 'id' => $request['request_Id']]); 
         }
         
     }

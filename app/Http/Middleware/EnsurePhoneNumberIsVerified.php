@@ -20,14 +20,14 @@ class EnsurePhoneNumberIsVerified
      */
     public function handle(Request $request, Closure $next, $redirectToRoute = null)
     {
-        $formatedphonenumber = $request->user()->getPhoneNumberForVerification();
+        $request->user()->getPhoneNumberForVerification();
 
         if (! $request->user() ||
             ($request->user() instanceof MustVerifyPhoneNumber &&
             ! $request->user()->hasVerifiedPhoneNumber())) {
             return $request->expectsJson()
                     ? abort(403, 'Your phone number is not verified.')
-                    : Redirect::guest(URL::route($redirectToRoute ?: 'phoneverification.notice'))->with('phone', $formatedphonenumber);
+                    : Redirect::guest(URL::route($redirectToRoute ?: 'phoneverification.notice'))->with('phone', $request['mobile_phone_number']);
         }
 
         return $next($request);
