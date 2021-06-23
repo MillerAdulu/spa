@@ -34,13 +34,6 @@ interface MustVerifyPhoneNumber
     public function getVerificationCode();
 
     /**
-    * Set phone verification status to true.
-    *
-    * @return void
-    */
-    public function verifyPhoneNumber();
-
-    /**
     * Mark the given user's phone number as verified.
     *
     * @return bool
