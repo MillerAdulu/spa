@@ -21,9 +21,11 @@ import Echo from 'laravel-echo';
 window.Pusher = require('pusher-js');
 
 // Enable pusher logging - don't include this in production
-Pusher.logToConsole = true;
+// Pusher.logToConsole = true;
 
-window.Echo = new Echo({
+window.EchoService = { // initialise echo instance/pusher connection only when and where called not on app launch and every page
+    init: () => 
+    new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
@@ -34,7 +36,21 @@ window.Echo = new Echo({
             'X-CSRF-TOKEN': '{{ csrf_token() }}',
         }
     }
-});
+})
+};
+
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: process.env.MIX_PUSHER_APP_KEY,
+//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,1
+//     forceTLS: true,
+//     authEndpoint: '/pusher/auth',
+//     auth: {
+//         headers: {
+//             'X-CSRF-TOKEN': '{{ csrf_token() }}',
+//         }
+//     }
+// });
 
 // import Vue from 'vue';
 

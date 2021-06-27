@@ -14,7 +14,7 @@ use Lab404\Impersonate\Models\Impersonate;
 
 class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNumber, MustAcceptTerms, MustHaveSubscription
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Impersonate;
     
     /**
      * The attributes that are mass assignable.
@@ -302,6 +302,24 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
     public function isLoggedIn()
     {
         return $this->is_logged_in;
+    }
+
+        /**
+     * @return bool
+     */
+    public function canImpersonate()
+    {
+        // For example
+        return $this->role == 'admin' || 'manager';
+    }
+
+        /**
+     * @return bool
+     */
+    public function canBeImpersonated()
+    {
+        // For example
+        return $this->role == 'user';
     }
 
     /**

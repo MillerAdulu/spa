@@ -40,6 +40,7 @@ class NotifyUsersWithIncompleteProfile extends Command
     public function handle()
     {
         $usertonotify = User::query()
+        ->where('role', 'user')
         ->whereNull('profile_updated_at')
         ->where('created_at', '<', now()->subDays(30))
         ->get();

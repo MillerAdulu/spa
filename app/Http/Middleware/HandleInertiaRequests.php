@@ -35,7 +35,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user() ? $request->user()->only('id', 'first_name', 'last_name') : null,
+                'user' => $request->user() ? $request->user()->only('id', 'first_name', 'last_name', 'role') : null,
             ],
 
             'flash' => [
@@ -43,13 +43,9 @@ class HandleInertiaRequests extends Middleware
                 'error' => $request->session()->get('error') ? $request->session()->get('error') : null,
             ],
 
-            // 'status' => [
-            //     'mobile_phone_number' => $request->session()->get('mobile_phone_numbee') ? $request->session()->get('mobile_phone_number') : null,
-            // ],
-
-            // 'broadcast' => [
-            //     'message' => $request->session()->get('message') ? $request->session()->get('message') : null,
-            // ],
+            'impersonation' => [
+                'impersonated_by' => $request->session()->get('impersonated_by') ? $request->session()->get('impersonated_by') : null,
+            ],
 
         ]);
     }

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\VerifyPhoneNumberController;
 use App\Http\Controllers\PusherController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,14 +32,26 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified', 'verifiedphonenumber'])->name('dashboard');
 
 Route::get('/verify-phone-number', [VerifyPhoneNumberController::class, 'createPhoneVerification'])
-->middleware('auth')
+->middleware('auth', 'verified')
 ->name('phoneverification.notice');
 
 Route::post('/verify-phone-number', [VerifyPhoneNumberController::class, 'verifyPhoneNumber'])
-->middleware('auth')
+->middleware('auth', 'verified')
 ->name('phoneverification.verify');
 
 Route::post('/pusher/auth', [PusherController::class, 'pusherAuth'])
 ->middleware('auth');
+
+Route::get('all-users', [AdminController::class, 'allUser'])
+->middleware(['auth', 'verified', 'verifiedphonenumber'])
+->name('all-users');
+
+Route::get('impersonate/{user_id}', [AdminController::class, 'impersonate'])
+->middleware(['auth', 'verified', 'verifiedphonenumber',])
+->name('impersonate');
+
+Route::get('impersonate_leave', [AdminController::class, 'impersonate_leave'])
+->middleware(['auth', 'verified', 'verifiedphonenumber'])
+->name('impersonate_leave');
 
 require __DIR__.'/auth.php';

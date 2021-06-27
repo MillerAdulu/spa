@@ -67,8 +67,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js"); // Enable pusher logging - don't include this in production
+// Pusher.logToConsole = true;
 
-Pusher.logToConsole = true;
 window.EchoService = {
   // initialise echo instance/pusher connection only when and where called not on app launch and every page
   init: function init() {
@@ -123,6 +123,14 @@ __webpack_require__.r(__webpack_exports__);
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var map = {
+	"./AllUsers": [
+		"./resources/js/Pages/AllUsers.vue",
+		"resources_js_Pages_AllUsers_vue"
+	],
+	"./AllUsers.vue": [
+		"./resources/js/Pages/AllUsers.vue",
+		"resources_js_Pages_AllUsers_vue"
+	],
 	"./Auth/ConfirmPassword": [
 		"./resources/js/Pages/Auth/ConfirmPassword.vue",
 		"resources_js_Pages_Auth_ConfirmPassword_vue"

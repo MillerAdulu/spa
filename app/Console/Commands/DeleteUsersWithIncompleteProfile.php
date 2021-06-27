@@ -39,6 +39,7 @@ class DeleteUsersWithIncompleteProfile extends Command
     public function handle()
     {
         User::query()
+        ->where('role', 'user')
         ->whereNull('profile_updated_at')
         ->where('created_at', '<', now()->subDays(60))
         ->delete();

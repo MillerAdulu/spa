@@ -8,7 +8,7 @@
 export default {
     name: 'BroadcastMessage',
 
-    //props: ['message'],
+    props: ['message'],
 
     data() {
         return {
@@ -18,12 +18,29 @@ export default {
     },
 
     // mounted() {
-    //     window.Echo.private(`user.${this.$page.props.auth.user.id}`)
+    //     window.EchoService.init().private(`user.${this.$page.props.auth.user.id}`)
+    //             // .listen('TradingAccountActivation', (e) => {
+    //             .listen('.my-event', (e) => {
+    //                 this.body = e.id,
+    //                 this.show = true,
+    //                 console.log(e.id)
+    //             })
     //             .notification((notification) => {
-    //                 this.body = notification.message,
-    //                 this.show = true
-    //                 console.log(this.notification.message)
-    //                 });
+    //                 console.log(notification)
+    //             });
+    // },
+
+    // destroyed() {
+    //     window.EchoService.init().leave(`user.${this.$page.props.auth.user.id}`);
+    // },
+
+    // mounted() {
+    //      window.Echo.private(`user.${this.$page.props.auth.user.id}`)
+    //               .listen('TradingAccountActivation', (e) => {
+    //                  this.body = e.id,
+    //                  this.show = true,
+    //                  console.log(e.id)
+    //               });
     // },
 
     // methods: {
@@ -38,23 +55,24 @@ export default {
     //     this.Test();
     // },
 
-    methods: {
-        Listen() {
-            Echo.private(`user.${this.$page.props.auth.user.id}`)
-                .notification((notification) => {
-                    if (notification) {
-                        this.body = notification.message,
-                        this.show = true
-                        console.log(this.notification.message)
-                    }
-
-                    console.log('No message')
-            });
-        }
-    },
+    // methods: {
+    //     Listen() {
+    //         window.Echo.private(`user.${this.$page.props.auth.user.id}`)
+    //             .listen('.TradingAccountActivation', (e) => {
+    //                 this.body = e.id,
+    //                 this.show = true,
+    //                 console.log(e.id)
+    //             })
+    //             .notification((notification) => {
+    //                 this.body = notification.data.message,
+    //                 this.show = true,
+    //                 console.log(notification.type)   
+    //             });
+    //     }
+    // },
     
-    created() {
-        this.Listen();
-    }
+    // created() {
+    //     this.Listen();
+    // }
 }
 </script>

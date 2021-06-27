@@ -18,6 +18,12 @@
                                 <breeze-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </breeze-nav-link>
+                                 <breeze-nav-link v-if="$page.props.auth.user.role === 'admin'" :href="route('all-users')" :active="route().current('all-users')">
+                                    All Users
+                                </breeze-nav-link>
+                                <breeze-nav-link v-else-if="$page.props.auth.user.role === 'manager'" :href="route('all-users')" :active="route().current('all-users')">
+                                    All Users
+                                </breeze-nav-link>
                             </div>
                         </div>                        
                         <!-- <div>
@@ -49,6 +55,9 @@
                                         <breeze-dropdown-link :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </breeze-dropdown-link>
+                                         <breeze-dropdown-link v-if="$page.props.impersonation.impersonated_by" :href="route('impersonate_leave')">
+                                            Back To Admin
+                                        </breeze-dropdown-link>
                                     </template>
                                 </breeze-dropdown>
                             </div>
@@ -72,6 +81,12 @@
                         <breeze-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </breeze-responsive-nav-link>
+                         <breeze-responsive-nav-link v-if="$page.props.auth.user.role === 'admin'" :href="route('all-users')" :active="route().current('all-users')">
+                            All Users
+                        </breeze-responsive-nav-link>
+                         <breeze-responsive-nav-link v-else-if="$page.props.auth.user.role === 'manager'" :href="route('all-users')" :active="route().current('all-users')">
+                            All Users
+                        </breeze-responsive-nav-link>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -83,6 +98,9 @@
                         <div class="mt-3 space-y-1">
                             <breeze-responsive-nav-link :href="route('logout')" method="post" as="button">
                                 Log Out
+                            </breeze-responsive-nav-link>
+                            <breeze-responsive-nav-link v-if="$page.props.impersonation.impersonated_by" :href="route('impersonate_leave')">
+                                Back To Admin
                             </breeze-responsive-nav-link>
                         </div>
                     </div>
@@ -99,7 +117,7 @@
             <!-- Page Content -->
             <main>
                 <flash-message />
-                 <broadcast-message></broadcast-message>
+                <broadcast-message :message="message"></broadcast-message>
                 <slot />
             </main>
         </div>
@@ -142,7 +160,7 @@
             fullname() {
                 return `${this.$page.props.auth.user.first_name} ${this.$page.props.auth.user.last_name}`
                 //return this.$page.props.auth.user.first_name + ' ' + this.$page.props.auth.user.last_name
-            }
+            },
         },
 
         data() {
