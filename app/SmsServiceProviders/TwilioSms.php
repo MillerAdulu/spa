@@ -3,10 +3,9 @@
 namespace App\SmsServiceProviders;
 
 use Twilio\Rest\Client;
-use App\Contracts\SmsService;
 use Twilio\Exceptions\TwilioException;
 
-class TwilioSms implements SmsService
+class TwilioSms 
 {
     public function sendSms($phoneNumber, $message)
     {

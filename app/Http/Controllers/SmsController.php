@@ -10,9 +10,9 @@ class SmsController extends Controller
 {
     public function createSms($phoneNumber, $message) 
     {
-        // $smsservice = new TwilioSms();
-        $smsservice = new VonageSms();
-        $smsservice->sendSms($phoneNumber, $message);
+        // $sms = new TwilioSms();
+        $sms = new VonageSms();
+        $sms->sendSms($phoneNumber, $message);
 
     }
 }

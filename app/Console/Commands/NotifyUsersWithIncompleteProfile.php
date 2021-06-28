@@ -46,7 +46,7 @@ class NotifyUsersWithIncompleteProfile extends Command
         ->get();
 
         foreach ($usertonotify as $user) {
-            $user->notify( new AccountDeletionNotice());
+            $user->notify(new AccountDeletionNotice());
         }
         
     }

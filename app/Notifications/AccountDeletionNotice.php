@@ -42,7 +42,7 @@ class AccountDeletionNotice extends Notification
     {
         return (new MailMessage)
                     ->line('Your account is going to be deleted 30 days from today.')
-                    ->action('Please complete your profile if you want to retain your account', url('login'))
+                    ->action('Please complete your profile if you want to retain your account', url('/login'))
                     ->line('Thank you for using our application!');
     }
 

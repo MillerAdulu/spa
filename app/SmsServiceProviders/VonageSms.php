@@ -6,9 +6,8 @@ use Vonage\Client\Credentials\Basic;
 use Vonage\Client;
 use Vonage\SMS\Message\SMS;
 use Vonage\Client\Exception\Exception;
-use App\Contracts\SmsService;
 
-class VonageSms implements SmsService
+class VonageSms 
 {
     public function sendSms($phoneNumber, $message)
     {

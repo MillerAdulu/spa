@@ -24,7 +24,8 @@
         "spatie/laravel-disable-floc": "^1.0",
         "tightenco/ziggy": "^1.0",
         "twilio/sdk": "6.24.0",
-        "vonage/client": "^2.4"
+        "vonage/client": "^2.4",
+        "wildbit/swiftmailer-postmark": "^3.3"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
