@@ -76,6 +76,10 @@ Route::get('/pde/{user_id}', [UserSettingsController::class, 'pde'])
 ->middleware(['auth', 'verified', 'verifiedphonenumber', 'password.confirm'])
 ->name('pde');
 
+Route::post('/pde/{user_id}', [UserSettingsController::class, 'dispatchPde'])
+->middleware(['auth', 'verified', 'verifiedphonenumber'])
+->name('pde.dispatch');
+
 Route::get('/close-account/{user_id}', [UserSettingsController::class, 'closeAccount'])
 ->middleware(['auth', 'verified', 'verifiedphonenumber', 'password.confirm'])
 ->name('close-account');
@@ -87,5 +91,7 @@ Route::get('/verify-two-fa', [TwoFaController::class, 'createTwoFaAuth'])
 Route::post('/verify-two-fa', [TwoFaController::class, 'verifyTwoFaAuth'])
 ->middleware('auth', 'verified', 'verifiedphonenumber')
 ->name('two-fa.verify');
+
+Route::personalDataExports('personal-data-exports');
 
 require __DIR__.'/auth.php';

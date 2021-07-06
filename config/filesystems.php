@@ -52,6 +52,12 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'personal-data-exports' => [
+            'driver' => 'local',
+            'root' => storage_path('app/personal-data-exports'),
+        ],
+    
+
     ],
 
     /*

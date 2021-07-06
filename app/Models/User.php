@@ -11,8 +11,9 @@ use App\Contracts\MustVerifyPhoneNumber;
 use App\Contracts\MustAcceptTerms;
 use App\Contracts\MustHaveSubscription;
 use Lab404\Impersonate\Models\Impersonate;
+use Spatie\PersonalDataExport\ExportsPersonalData;
 
-class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNumber, MustAcceptTerms, MustHaveSubscription
+class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNumber, MustAcceptTerms, MustHaveSubscription, ExportsPersonalData
 {
     use HasFactory, Notifiable, Impersonate;
     
@@ -402,6 +403,23 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
     {
         // For example
         return $this->role == 'user';
+    }
+
+    // in your user model
+
+    public function selectPersonalData(PersonalDataSelection $personalData): void {
+    $personalData
+        ->add('user.json', ['name' => $this->first_name, 'email' => $this->email]);
+        // ->addFile(storage_path("avatars/{$this->id}.jpg"))
+        // ->addFile('other-user-data.xml', 's3');
+    }
+
+    // on your user
+
+    public function personalDataExportName(): string {
+    $userName = Str::slug($this->first_name);
+
+    return "personal-data-{$userName}.zip";
     }
 
     /**

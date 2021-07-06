@@ -1140,14 +1140,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           'active': $data.toggleActive
         }, "toggle_container"]
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_toggle_button, {
-        onChange: $options.triggerToggleEvent,
-        labels: {
-          checkedvalue: 'On',
-          unchecked: 'Off'
-        },
-        style: {
-          "margin-left": "15px"
-        }
+        onChange: $options.triggerToggleEvent
       }, null, 8
       /* PROPS */
       , ["onChange"])], 2

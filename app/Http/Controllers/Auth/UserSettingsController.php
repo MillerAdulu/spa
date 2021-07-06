@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
+use Spatie\PersonalDataExport\Jobs\CreatePersonalDataExportJob;
+
 
 class UserSettingsController extends Controller
 {
@@ -39,6 +41,13 @@ class UserSettingsController extends Controller
     public function pde()
     {
         return Inertia::render('Pde'); 
+    }
+
+    public function dispatchPde()
+    {
+        dispatch(new CreatePersonalDataExportJob(auth()->user()));
+        Session::flash('success', 'Your personal data has been emailed to you');
+        return redirect()->back();
     }
 
     public function closeAccount()

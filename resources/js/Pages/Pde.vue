@@ -8,6 +8,15 @@
                 Back to Settings
             </breeze-nav-link>
         </template>
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 bg-hite border-b border-gray-200">
+                        Request Personal Data
+                    </div>
+                </div>
+            </div>
+        </div>
       </breeze-authenticated-layout>
 </template>
 
