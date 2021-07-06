@@ -52,11 +52,14 @@
                                     </template>
 
                                     <template #content>
+                                        <breeze-dropdown-link v-if="$page.props.impersonation.impersonated_by" :href="route('impersonate_leave')">
+                                            Back To Admin
+                                        </breeze-dropdown-link>
+                                        <breeze-dropdown-link :href="route('settings')">
+                                            Settings
+                                        </breeze-dropdown-link>
                                         <breeze-dropdown-link :href="route('logout')" method="post" as="button">
                                             Log Out
-                                        </breeze-dropdown-link>
-                                         <breeze-dropdown-link v-if="$page.props.impersonation.impersonated_by" :href="route('impersonate_leave')">
-                                            Back To Admin
                                         </breeze-dropdown-link>
                                     </template>
                                 </breeze-dropdown>
@@ -96,11 +99,14 @@
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <breeze-responsive-nav-link :href="route('logout')" method="post" as="button">
-                                Log Out
-                            </breeze-responsive-nav-link>
                             <breeze-responsive-nav-link v-if="$page.props.impersonation.impersonated_by" :href="route('impersonate_leave')">
                                 Back To Admin
+                            </breeze-responsive-nav-link>
+                            <breeze-responsive-nav-link :href="route('settings')">
+                                Settings
+                            </breeze-responsive-nav-link>
+                            <breeze-responsive-nav-link :href="route('logout')" method="post" as="button">
+                                Log Out
                             </breeze-responsive-nav-link>
                         </div>
                     </div>

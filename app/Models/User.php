@@ -26,11 +26,13 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
         'last_name',
         'mobile_phone_number',
         'verification_code',
+        'two_fa_token',
         'email',
         'password',
         'has_active_subscription',
         'has_active_savings_plan',
         'is_logged_in',
+        'enabled_two_fa',
     ];
 
     /**
@@ -42,6 +44,7 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
         'password',
         'remember_token',
         'verification_code',
+        'two_fa_token',
     ];
 
     /**
@@ -56,6 +59,7 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
         'profile_updated_at' => 'datetime',
         'initial_subscription_paid_at' => 'datetime',
         'last_login_at' => 'datetime',
+        'user_two_fa_authenticated_at' => 'datetime',
     ];
 
     /**
@@ -90,6 +94,18 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
         return $this->forceFill(['verification_code' => $code])->save();
     }
 
+     /**
+    * Create two-fa token to send to user.
+    *
+    * @return string
+    */
+    public function createTwoFaToken() //find a way to mask code before save to db. Hash/bcrypt
+    {
+        $token = random_int(100000, 999999);
+
+        return $this->forceFill(['two_fa_token' => $token])->save();
+    }
+
     /**
     * Get the verification that was sent to the user.
     *
@@ -98,6 +114,38 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
     public function getVerificationCode() //find way to decrypt db value before use/send to user
     {
         return $this->verification_code;
+    }
+
+    /**
+    * Get the two-fa token that was sent to the user.
+    *
+    * @return string
+    */
+    public function getTwoFaToken() //find way to decrypt db value before use/send to user
+    {
+        return $this->two_fa_token;
+    }
+
+    /**
+     * Mark the given user's phone number as verified.
+     *
+     * @return bool
+     */
+    public function markUserAsTwoFaAuthenticated()
+    {
+        return $this->forceFill([
+            'user_two_fa_authenticated_at' => $this->freshTimestamp(),
+        ])->save();
+    }   
+
+    /**
+     * Determine if the user has verified their phone number.
+     *
+     * @return bool
+     */
+    public function hasTwoFaAuthenticated()
+    {
+        return ! is_null($this->user_two_fa_authenticated_at);
     }
 
     /**
@@ -304,7 +352,41 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
         return $this->is_logged_in;
     }
 
-        /**
+     /**
+    * Set the given user's two-fa status to true.
+    *
+    * @return bool
+    */
+    public function setEnabledTwoFaToTrue()
+    {
+        return $this->forceFill([
+            'enabled_two_fa' => true,
+        ])->save();
+    }
+   
+    /**
+    * Set the given user's two-fa status to false.
+    *
+    * @return bool
+    */
+    public function setEnabledTwoFaToFalse()
+    {
+        return $this->forceFill([
+            'enabled_two_fa' => false,
+        ])->save();
+    }
+   
+    /**
+    * Check if the given user has enabled two-fa.
+    *
+    * @return bool
+    */
+    public function enabledTwoFa()
+    {
+        return $this->enabled_two_fa;
+    }
+
+    /**
      * @return bool
      */
     public function canImpersonate()
@@ -313,7 +395,7 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
         return $this->role == 'admin' || 'manager';
     }
 
-        /**
+    /**
      * @return bool
      */
     public function canBeImpersonated()

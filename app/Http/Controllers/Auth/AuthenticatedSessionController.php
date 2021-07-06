@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
-use App\Events\TradingAccountActivation;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -39,7 +38,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
         
-        // event(new TradingAccountActivation($request->user()));
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\Auth\TwoFaController;
 
 class LoginRequest extends FormRequest
 {
@@ -84,6 +85,13 @@ class LoginRequest extends FormRequest
             throw ValidationException::withMessages([
                 'username' => __('auth.failed'),
             ]);
+
+        // check if user enabled 2fa, if yes, initiate 2fa step, else, login user normally 
+        // if ($this->user()->enabledTwoFa() === true) {
+        //     $initiatetwofa = new TwoFaController();
+        //     $initiatetwofa->createTwoFaAuth(request());
+        // }
+
         }
 
         RateLimiter::clear($this->throttleKey());

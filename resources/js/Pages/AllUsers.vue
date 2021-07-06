@@ -5,7 +5,7 @@
                 All Users
             </h2>
         </template>
-         <div class="py-12">
+        <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div v-if="$page.props.auth.user.role === 'admin'" class="p-6 bg-hite border-b border-gray-200">
@@ -27,9 +27,9 @@
                                         Impersonate User
                                     </inertia-link>
                                 </tr>
-                                <!-- <tr v-if="users.length === 0">
-                                    <td class="border-t px-6 py-4" colspan="4">No user found.</td
-                                </tr> -->
+                                <tr v-if="users.length === 0">
+                                    <td class="border-t px-6 py-4" colspan="4">No user found.</td>
+                                </tr>
                             </table>
                         </div>  
                     </div>
@@ -52,9 +52,9 @@
                                         Impersonate User
                                     </inertia-link>
                                 </tr>
-                                <!-- <tr v-if="users.length === 0">
-                                    <td class="border-t px-6 py-4" colspan="4">No user found.</td
-                                </tr> -->
+                                <tr v-if="users.length === 0">
+                                    <td class="border-t px-6 py-4" colspan="4">No user found.</td>
+                                </tr>
                             </table>
                         </div>
                     </div>

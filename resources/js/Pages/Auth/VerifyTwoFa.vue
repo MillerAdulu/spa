@@ -1,18 +1,17 @@
 <template>
     <breeze-validation-errors class="mb-4" />
     <div class="mb-4 text-sm text-gray-600">
-        Thanks for signing up. Please verify your phone number:{{ phone }} by filling in the code we just texted to you.
+        Thanks for activating a second level Verification. Please authenticate by filling in the token we just texted to you.
     </div>
     <form @submit.prevent="submit">
         <div class="mt-4">
-            <breeze-label for="code" value="Phone Verification Code" />
+            <breeze-label for="token" value="Two-Fa Token" />
             <breeze-input id="mobile_phone_number" type="hidden" :value="phone" class="mt-1 block w-full" name="form.mobile_phone_number" autofocus autocomplete="mobile_phone_number" />
-            <breeze-input id="verification_code" type="text" class="mt-1 block w-full" v-model="form.verification_code" required autofocus autocomplete="verification_code" />
-            <breeze-input id="request_Id" type="hidden" :value="id" class="mt-1 block w-full" name="form.request_Id" autofocus autocomplete="request_Id" />
+            <breeze-input id="two_fa_token" type="text" class="mt-1 block w-full" v-model="form.two_fa_token" required autofocus autocomplete="two_fa_token" />
         </div>
         <div class="mt-4 flex items-center justify-between">
             <breeze-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Verify Phone Number
+                Verify Two-Fa Token
             </breeze-button>
 
             <inertia-link :href="route('logout')" method="post" as="button" class="underline text-sm text-gray-600 hover:text-gray-900">Log Out</inertia-link>
@@ -26,7 +25,6 @@ import BreezeGuestLayout from '@/Layouts/Guest'
 import BreezeInput from '@/Components/Input'
 import BreezeLabel from '@/Components/Label'
 import BreezeValidationErrors from '@/Components/ValidationErrors'
-
 export default {
     inheritAttrs: false,
         
@@ -41,29 +39,26 @@ export default {
 
     props: {
         phone: String,
-        id: String
     },
 
     data() {
         return {
             form: this.$inertia.form({
-                verification_code: '',
+                two_fa_token: '',
                 mobile_phone_number: '',
-                request_Id: '',
             })
         }
     },
 
     mounted() {
             
-        this.form.mobile_phone_number = document.getElementById("mobile_phone_number").value,
-        this.form.request_Id = document.getElementById("request_Id").value
+        this.form.mobile_phone_number = document.getElementById("mobile_phone_number").value
     },
 
     methods: {
         submit() {
-            this.form.post(this.route('phoneverification.verify'), {
-                onFinish: () => this.form.reset('code'),
+            this.form.post(this.route('two-fa.verify'), {
+                onFinish: () => this.form.reset('token'),
             })
         },
     }

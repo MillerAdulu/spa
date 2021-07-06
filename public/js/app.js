@@ -187,6 +187,22 @@ var map = {
 		"./resources/js/Pages/Auth/VerifyPhoneNumber.vue",
 		"resources_js_Pages_Auth_VerifyPhoneNumber_vue"
 	],
+	"./Auth/VerifyTwoFa": [
+		"./resources/js/Pages/Auth/VerifyTwoFa.vue",
+		"resources_js_Pages_Auth_VerifyTwoFa_vue"
+	],
+	"./Auth/VerifyTwoFa.vue": [
+		"./resources/js/Pages/Auth/VerifyTwoFa.vue",
+		"resources_js_Pages_Auth_VerifyTwoFa_vue"
+	],
+	"./CloseAccount": [
+		"./resources/js/Pages/CloseAccount.vue",
+		"resources_js_Pages_CloseAccount_vue"
+	],
+	"./CloseAccount.vue": [
+		"./resources/js/Pages/CloseAccount.vue",
+		"resources_js_Pages_CloseAccount_vue"
+	],
 	"./Dashboard": [
 		"./resources/js/Pages/Dashboard.vue",
 		"resources_js_Pages_Dashboard_vue"
@@ -194,6 +210,32 @@ var map = {
 	"./Dashboard.vue": [
 		"./resources/js/Pages/Dashboard.vue",
 		"resources_js_Pages_Dashboard_vue"
+	],
+	"./Pde": [
+		"./resources/js/Pages/Pde.vue",
+		"resources_js_Pages_Pde_vue"
+	],
+	"./Pde.vue": [
+		"./resources/js/Pages/Pde.vue",
+		"resources_js_Pages_Pde_vue"
+	],
+	"./Settings": [
+		"./resources/js/Pages/Settings.vue",
+		"resources_js_Pages_Settings_vue"
+	],
+	"./Settings.vue": [
+		"./resources/js/Pages/Settings.vue",
+		"resources_js_Pages_Settings_vue"
+	],
+	"./TwoFa": [
+		"./resources/js/Pages/TwoFa.vue",
+		"/js/vendor",
+		"resources_js_Pages_TwoFa_vue"
+	],
+	"./TwoFa.vue": [
+		"./resources/js/Pages/TwoFa.vue",
+		"/js/vendor",
+		"resources_js_Pages_TwoFa_vue"
 	],
 	"./Welcome": [
 		"./resources/js/Pages/Welcome.vue",
