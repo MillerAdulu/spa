@@ -54,4 +54,12 @@ class UserSettingsController extends Controller
     {
         return Inertia::render('CloseAccount'); 
     }
+
+    public function softDeleteUser($user_id) //notify admin with copy of dispatch, cascade and softdelete related data
+    {   
+        dispatch(new CreatePersonalDataExportJob(auth()->user()));
+        User::find($user_id)->delete();
+        Session::flash('success', 'Your account was successfully deleted');
+        return redirect()->back(); 
+    }
 }

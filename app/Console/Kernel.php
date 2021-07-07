@@ -33,6 +33,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('notifyuserswithincomplete:profile')->dailyAt('23:00');
         $schedule->command('deleteuserswithincomplete:profile')->dailyAt('23:00');
         $schedule->command('personal-data-export:clean')->dailyAt('23:00');
+        $schedule->command('deleteclosed:accounts')->dailyAt('23:00');
 
         // $schedule->command('deleteunverified:users')->cron('* 0 * * *');
         // $schedule->command('notifyuserswithincomplete:profile')->cron('* 0 * * *');

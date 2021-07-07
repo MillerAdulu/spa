@@ -12,10 +12,11 @@ use App\Contracts\MustAcceptTerms;
 use App\Contracts\MustHaveSubscription;
 use Lab404\Impersonate\Models\Impersonate;
 use Spatie\PersonalDataExport\ExportsPersonalData;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNumber, MustAcceptTerms, MustHaveSubscription, ExportsPersonalData
 {
-    use HasFactory, Notifiable, Impersonate;
+    use HasFactory, Notifiable, Impersonate, SoftDeletes;
     
     /**
      * The attributes that are mass assignable.
@@ -61,6 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
         'initial_subscription_paid_at' => 'datetime',
         'last_login_at' => 'datetime',
         'user_two_fa_authenticated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     /**

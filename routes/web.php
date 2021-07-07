@@ -84,6 +84,10 @@ Route::get('/close-account/{user_id}', [UserSettingsController::class, 'closeAcc
 ->middleware(['auth', 'verified', 'verifiedphonenumber', 'password.confirm'])
 ->name('close-account');
 
+Route::post('/close-account/{user_id}', [UserSettingsController::class, 'softDeleteUser'])
+->middleware(['auth', 'verified', 'verifiedphonenumber'])
+->name('close-account.softdelete');
+
 Route::get('/verify-two-fa', [TwoFaController::class, 'createTwoFaAuth'])
 ->middleware('auth', 'verified', 'verifiedphonenumber')
 ->name('two-fa.notice');
