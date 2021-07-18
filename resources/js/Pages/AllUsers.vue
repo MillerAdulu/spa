@@ -23,8 +23,11 @@
                                     <td class="border-t">
                                         {{ user.last_name }}
                                     </td>
-                                    <inertia-link :href="route('impersonate', `${user.id}`)" class="underline text-sm text-gray-600 hover:text-gray-900">
+                                    <inertia-link :href="route('impersonate', `${user.id}`)" class="border-t underline text-sm text-gray-600 hover:text-gray-900">
                                         Impersonate User
+                                    </inertia-link>
+                                    <inertia-link v-if="user.profile_updated_at !== null" :href="route('profile.adminshow', `${user.uuid}`)" class="border-t underline text-sm text-gray-600 hover:text-gray-900">
+                                        User Profile
                                     </inertia-link>
                                 </tr>
                                 <tr v-if="users.length === 0">
@@ -48,8 +51,11 @@
                                     <td class="border-t">
                                         {{ user.last_name }}
                                     </td>
-                                    <inertia-link :href="route('impersonate', `${user.id}`)" class="underline text-sm text-gray-600 hover:text-gray-900">
+                                    <inertia-link :href="route('impersonate', `${user.id}`)" class="border-t underline text-sm text-gray-600 hover:text-gray-900">
                                         Impersonate User
+                                    </inertia-link>
+                                    <inertia-link v-if="user.profile_updated_at !== null" :href="route('profile.adminshow', `${user.uuid}`)" class=" border-t underline text-sm text-gray-600 hover:text-gray-900">
+                                        User Profile
                                     </inertia-link>
                                 </tr>
                                 <tr v-if="users.length === 0">
@@ -70,7 +76,7 @@ export default {
     inheritAttrs: false,
 
     props: {
-        users: Array
+        users: Array,
     },
 
     components: {

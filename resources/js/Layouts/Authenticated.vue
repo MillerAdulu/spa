@@ -18,7 +18,7 @@
                                 <breeze-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </breeze-nav-link>
-                                 <breeze-nav-link v-if="$page.props.auth.user.role === 'admin'" :href="route('all-users')" :active="route().current('all-users')">
+                                <breeze-nav-link v-if="$page.props.auth.user.role === 'admin'" :href="route('all-users')" :active="route().current('all-users')">
                                     All Users
                                 </breeze-nav-link>
                                 <breeze-nav-link v-else-if="$page.props.auth.user.role === 'manager'" :href="route('all-users')" :active="route().current('all-users')">
@@ -58,6 +58,15 @@
                                         <breeze-dropdown-link :href="route('settings')">
                                             Settings
                                         </breeze-dropdown-link>
+                                        <breeze-dropdown-link v-if="$page.props.auth.user.profile_updated_at === null" :href="route('profile.create')">
+                                            Create Profile
+                                        </breeze-dropdown-link>
+                                        <breeze-dropdown-link v-else :href="route('profile.show', `${$page.props.auth.user.uuid}`)">
+                                            Profile
+                                        </breeze-dropdown-link>
+                                        <!-- <breeze-dropdown-link v-if="$page.props.auth.user.role === 'user'" :href="route('payments')">
+                                            Payments
+                                        </breeze-dropdown-link> -->
                                         <breeze-dropdown-link :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </breeze-dropdown-link>
@@ -84,10 +93,10 @@
                         <breeze-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </breeze-responsive-nav-link>
-                         <breeze-responsive-nav-link v-if="$page.props.auth.user.role === 'admin'" :href="route('all-users')" :active="route().current('all-users')">
+                        <breeze-responsive-nav-link v-if="$page.props.auth.user.role === 'admin'" :href="route('all-users')" :active="route().current('all-users')">
                             All Users
                         </breeze-responsive-nav-link>
-                         <breeze-responsive-nav-link v-else-if="$page.props.auth.user.role === 'manager'" :href="route('all-users')" :active="route().current('all-users')">
+                        <breeze-responsive-nav-link v-else-if="$page.props.auth.user.role === 'manager'" :href="route('all-users')" :active="route().current('all-users')">
                             All Users
                         </breeze-responsive-nav-link>
                     </div>
@@ -105,6 +114,15 @@
                             <breeze-responsive-nav-link :href="route('settings')">
                                 Settings
                             </breeze-responsive-nav-link>
+                            <breeze-responsive-nav-link v-if="$page.props.auth.user.profile_updated_at === null" :href="route('profile.create')">
+                                Create Profile
+                            </breeze-responsive-nav-link>
+                            <breeze-responsive-nav-link v-else :href="route('profile.show', `${$page.props.auth.user.uuid}`)">
+                                Profile
+                            </breeze-responsive-nav-link>
+                            <!-- <breeze-responsive-nav-link v-if="$page.props.auth.user.role === 'user'" :href="route('payments')">
+                                Payments
+                            </breeze-responsive-nav-link> -->
                             <breeze-responsive-nav-link :href="route('logout')" method="post" as="button">
                                 Log Out
                             </breeze-responsive-nav-link>
@@ -165,7 +183,7 @@
         computed: {
             fullname() {
                 return `${this.$page.props.auth.user.first_name} ${this.$page.props.auth.user.last_name}`
-                //return this.$page.props.auth.user.first_name + ' ' + this.$page.props.auth.user.last_name
+                // return this.$page.props.auth.user.first_name + ' ' + this.$page.props.auth.user.last_name
             },
         },
 

@@ -21,15 +21,15 @@ class CreateUsersTable extends Migration
             $table->string('mobile_phone_number')->unique();
             $table->string('email')->unique();
             $table->string('verification_code')->unique()->nullable();
-            $table->boolean('has_active_subscription')->default(false);
-            $table->boolean('has_active_savings_plan')->default(false);
+            // $table->boolean('has_active_subscription')->default(false);
+            // $table->boolean('has_active_savings_schedule')->default(false);
             $table->boolean('is_logged_in')->default(false);
             $table->timestamp('phone_number_verified_at')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('terms_accepted_at')->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->timestamp('profile_updated_at')->nullable();
-            $table->timestamp('initial_subscription_paid_at')->nullable();
+            // $table->timestamp('subscription_paid_at')->nullable();
             $table->string('password');   
             $table->rememberToken();
             $table->timestamps();

@@ -22,20 +22,20 @@ class UserSettingsController extends Controller
         return Inertia::render('TwoFa');
     }
 
-    public function enableTwoFa($user_id)
+    public function enableDisableTwoFa($user_id) //if not enabled, do so, and if enabled, disable
     {        
-        User::find($user_id);
-        $this->user()->setEnabledTwoFaToTrue();
-        Session::flash('success', 'Two Factor Authentication successfully enabled');
-        return redirect()->back();
-    }
-
-    public function disableTwoFa($user_id)
-    {
-        User::find($user_id);
-        $this->user()->setEnabledTwoFaToFalse();
-        Session::flash('success', 'Two Factor Authentication successfully disabled');
-        return redirect()->back();
+        $user = User::find($user_id);
+        if ($user->hasEnabledTwoFa()) {
+            $this->user()->setEnabledTwoFaToTrue();
+            Session::flash('success', 'Two Factor Authentication successfully enabled');
+            return redirect()->back();
+        } 
+        
+        elseif ($user->hasEnabledTwoFa()) {
+            $this->user()->setEnabledTwoFaToFalse();
+            Session::flash('success', 'Two Factor Authentication successfully disabled');
+            return redirect()->back();
+        }
     }
 
     public function pde()

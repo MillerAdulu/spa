@@ -55,7 +55,6 @@ export default {
     },
 
     mounted() {
-            
         this.form.mobile_phone_number = document.getElementById("mobile_phone_number").value,
         this.form.request_Id = document.getElementById("request_Id").value
     },

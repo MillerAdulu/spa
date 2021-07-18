@@ -9,12 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use App\Contracts\MustVerifyPhoneNumber;
 use App\Contracts\MustAcceptTerms;
-use App\Contracts\MustHaveSubscription;
 use Lab404\Impersonate\Models\Impersonate;
 use Spatie\PersonalDataExport\ExportsPersonalData;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNumber, MustAcceptTerms, MustHaveSubscription, ExportsPersonalData
+class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNumber, MustAcceptTerms
 {
     use HasFactory, Notifiable, Impersonate, SoftDeletes;
     
@@ -31,8 +30,6 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
         'two_fa_token',
         'email',
         'password',
-        'has_active_subscription',
-        'has_active_savings_plan',
         'is_logged_in',
         'enabled_two_fa',
     ];
@@ -59,11 +56,15 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
         'phone_number_verified_at' => 'datetime',
         'terms_accepted_at' => 'datetime',
         'profile_updated_at' => 'datetime',
-        'initial_subscription_paid_at' => 'datetime',
         'last_login_at' => 'datetime',
         'user_two_fa_authenticated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
+
+    public function userprofile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
 
     /**
      * Determine if the user has verified their phone number.
@@ -186,7 +187,7 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
     }
 
     /**
-     * Set 'profile_updated' to true.
+     * Check 'profile_updated' status.
      *
      * @return bool
      */
@@ -205,108 +206,6 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
         return $this->forceFill([
             'profile_updated_at' => $this->freshTimestamp(),
         ])->save();
-    }
-   
-    /**
-    * Record user sign up.
-    *
-    * @return bool
-    */
-    public function hasPaidInitialSubscription()
-    {
-        return ! is_null($this->initial_subscription_paid_at);
-    }
-
-    /**
-    * Record user as having signed up.
-    *
-    * @return bool
-    */
-    public function markInitialSubscriptionAsPaid()
-    {
-        return $this->forceFill([
-            'initial_subscription_paid_at' => $this->freshTimestamp(),
-        ])->save();
-    }
-
-    /**
-    * Set the given user's subscription status to true.
-    *
-    * @return bool
-    */
-    public function setHasActiveSubscriptionToTrue()
-    {
-        return $this->forceFill([
-            'has_active_subscription' => true,
-        ])->save();
-    }
-
-    /**
-    * Set the given user's subscription status to false.
-    *
-    * @return bool
-    */
-    public function setHasActiveSubscriptionToFalse()
-    {
-        return $this->forceFill([
-            'has_active_subscription' => false,
-        ])->save();
-
-    }
-
-    /**
-    * Check if user has a currently active subscription.
-    *
-    * @return bool
-    */
-    public function hasActiveSubscription()
-    {
-        return $this->has_active_subscription;
-    }
-
-    /**
-    * Set the given user's savings plan status to true.
-    *
-    * @return bool
-    */
-    public function setHasActiveSavingsPlanToTrue()
-    {
-        return $this->forceFill([
-            'has_active_savings_plan' => true,
-        ])->save();
-
-    }
-
-    /**
-    * Set the given user's savings plan status to false.
-    *
-    * @return bool
-    */
-    public function setHasActiveSavingsPlanToFalse()
-    {
-        return $this->forceFill([
-            'has_active_savings_plan' => false,
-        ])->save();
-    }
-    /**
-    * Check if user has a currently active plan savings plan.
-    *
-    * @return bool
-    */
-    public function hasActiveSavingsPlan()
-    {
-        return $this->has_active_savings_plan;
-    }
-
-     /**
-    * Check if given user is active.
-    *
-    * @return bool
-    */
-    public function isActiveUser() //test if both are correct
-    {
-        return ! empty($this->has_active_subscription && $this->has_active_savings_plan);
-        // return ! is_null($this->has_active_subscription && $this->has_active_savings_plan);
     }
 
     /**
@@ -384,9 +283,9 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
     *
     * @return bool
     */
-    public function enabledTwoFa()
+    public function hasEnabledTwoFa()
     {
-        return $this->enabled_two_fa;
+        return ! is_null($this->enabled_two_fa);
     }
 
     /**
@@ -407,22 +306,22 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
         return $this->role == 'user';
     }
 
-    // in your user model
+    // // in your user model
 
-    public function selectPersonalData(PersonalDataSelection $personalData): void {
-    $personalData
-        ->add('user.json', ['name' => $this->first_name, 'email' => $this->email]);
-        // ->addFile(storage_path("avatars/{$this->id}.jpg"))
-        // ->addFile('other-user-data.xml', 's3');
-    }
+    // public function selectPersonalData(PersonalDataSelection $personalData): void {
+    // $personalData
+    //     ->add('user.json', ['name' => $this->first_name, 'email' => $this->email])
+    //     ->addFile(storage_path("avatars/{$this->id}.jpg"))
+    //     ->addFile('other-user-data.xml', 's3');
+    // }
 
-    // on your user
+    // // on your user
 
-    public function personalDataExportName(): string {
-    $userName = Str::slug($this->first_name);
+    // public function personalDataExportName(): string {
+    // $userName = Str::slug($this->first_name);
 
-    return "personal-data-{$userName}.zip";
-    }
+    // return "personal-data-{$userName}.zip";
+    // }
 
     /**
     * Route notifications for the Sms Notification channel.

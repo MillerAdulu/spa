@@ -123,6 +123,14 @@ __webpack_require__.r(__webpack_exports__);
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var map = {
+	"./AdminShowProfile": [
+		"./resources/js/Pages/AdminShowProfile.vue",
+		"resources_js_Pages_AdminShowProfile_vue"
+	],
+	"./AdminShowProfile.vue": [
+		"./resources/js/Pages/AdminShowProfile.vue",
+		"resources_js_Pages_AdminShowProfile_vue"
+	],
 	"./AllUsers": [
 		"./resources/js/Pages/AllUsers.vue",
 		"resources_js_Pages_AllUsers_vue"
@@ -203,6 +211,14 @@ var map = {
 		"./resources/js/Pages/CloseAccount.vue",
 		"resources_js_Pages_CloseAccount_vue"
 	],
+	"./CreateProfile": [
+		"./resources/js/Pages/CreateProfile.vue",
+		"resources_js_Pages_CreateProfile_vue"
+	],
+	"./CreateProfile.vue": [
+		"./resources/js/Pages/CreateProfile.vue",
+		"resources_js_Pages_CreateProfile_vue"
+	],
 	"./Dashboard": [
 		"./resources/js/Pages/Dashboard.vue",
 		"resources_js_Pages_Dashboard_vue"
@@ -210,6 +226,14 @@ var map = {
 	"./Dashboard.vue": [
 		"./resources/js/Pages/Dashboard.vue",
 		"resources_js_Pages_Dashboard_vue"
+	],
+	"./EditProfile": [
+		"./resources/js/Pages/EditProfile.vue",
+		"resources_js_Pages_EditProfile_vue"
+	],
+	"./EditProfile.vue": [
+		"./resources/js/Pages/EditProfile.vue",
+		"resources_js_Pages_EditProfile_vue"
 	],
 	"./Pde": [
 		"./resources/js/Pages/Pde.vue",
@@ -226,6 +250,14 @@ var map = {
 	"./Settings.vue": [
 		"./resources/js/Pages/Settings.vue",
 		"resources_js_Pages_Settings_vue"
+	],
+	"./ShowProfile": [
+		"./resources/js/Pages/ShowProfile.vue",
+		"resources_js_Pages_ShowProfile_vue"
+	],
+	"./ShowProfile.vue": [
+		"./resources/js/Pages/ShowProfile.vue",
+		"resources_js_Pages_ShowProfile_vue"
 	],
 	"./TwoFa": [
 		"./resources/js/Pages/TwoFa.vue",

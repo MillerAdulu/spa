@@ -8,6 +8,7 @@ use App\Http\Controllers\PusherController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\UserSettingsController;
 use App\Http\Controllers\Auth\TwoFaController;
+use App\Http\Controllers\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,31 +61,27 @@ Route::get('/settings', [UserSettingsController::class, 'index'])
 ->middleware(['auth', 'verified', 'verifiedphonenumber'])
 ->name('settings');
 
-Route::get('/two-fa/{user_id}', [UserSettingsController::class, 'twofa'])
+Route::get('/two-fa/{uuid}', [UserSettingsController::class, 'twoFa'])
 ->middleware(['auth', 'verified', 'verifiedphonenumber', 'password.confirm'])
 ->name('two-fa');
 
-Route::post('/two-fa/{user_id}', [UserSettingsController::class, 'enableTwoFa'])
+Route::post('/two-fa/{uuid}', [UserSettingsController::class, 'enableDisableTwoFa'])
 ->middleware(['auth', 'verified', 'verifiedphonenumber'])
 ->name('two-fa.enable');
 
-Route::post('/two-fa/{user_id}', [UserSettingsController::class, 'disableTwoFa'])
-->middleware(['auth', 'verified', 'verifiedphonenumber'])
-->name('two-fa.disable');
-
-Route::get('/pde/{user_id}', [UserSettingsController::class, 'pde'])
+Route::get('/pde/{uuid}', [UserSettingsController::class, 'pde'])
 ->middleware(['auth', 'verified', 'verifiedphonenumber', 'password.confirm'])
 ->name('pde');
 
-Route::post('/pde/{user_id}', [UserSettingsController::class, 'dispatchPde'])
+Route::post('/pde/{uuid}', [UserSettingsController::class, 'dispatchPde'])
 ->middleware(['auth', 'verified', 'verifiedphonenumber'])
 ->name('pde.dispatch');
 
-Route::get('/close-account/{user_id}', [UserSettingsController::class, 'closeAccount'])
+Route::get('/close-account/{uuid}', [UserSettingsController::class, 'closeAccount'])
 ->middleware(['auth', 'verified', 'verifiedphonenumber', 'password.confirm'])
 ->name('close-account');
 
-Route::post('/close-account/{user_id}', [UserSettingsController::class, 'softDeleteUser'])
+Route::post('/close-account/{uuid}', [UserSettingsController::class, 'softDeleteUser'])
 ->middleware(['auth', 'verified', 'verifiedphonenumber'])
 ->name('close-account.softdelete');
 
@@ -97,5 +94,37 @@ Route::post('/verify-two-fa', [TwoFaController::class, 'verifyTwoFaAuth'])
 ->name('two-fa.verify');
 
 Route::personalDataExports('personal-data-exports');
+
+Route::get('/profile', [UserProfileController::class, 'create'])
+->middleware(['auth', 'verified', 'verifiedphonenumber'])
+->name('profile.create');
+
+Route::post('/profile', [UserProfileController::class, 'store'])
+->middleware(['auth', 'verified', 'verifiedphonenumber'])
+->name('profile.store');
+
+Route::get('/profile/{uuid}/edit', [UserProfileController::class, 'edit'])
+->middleware(['auth', 'verified', 'verifiedphonenumber', 'password.confirm'])
+->name('profile.edit');
+
+Route::put('/profile/{uuid}', [UserProfileController::class, 'update'])
+->middleware(['auth', 'verified', 'verifiedphonenumber'])
+->name('profile.update');
+
+Route::get('/profile/{uuid}/show', [UserProfileController::class, 'show'])
+->middleware(['auth', 'verified', 'verifiedphonenumber'])
+->name('profile.show');
+
+Route::get('/profile/{uuid}/adminshow', [AdminController::class, 'showUserProfile'])
+->middleware(['auth', 'verified', 'verifiedphonenumber'])
+->name('profile.adminshow');
+
+Route::get('/download/{filename}', [AdminController::class, 'download'])
+->middleware(['auth', 'verified', 'verifiedphonenumber'])
+->name('download');
+
+Route::get('display-image/{filename}', [AdminController::class, 'displayImage'])
+->middleware(['auth', 'verified', 'verifiedphonenumber'])
+->name('display-image');
 
 require __DIR__.'/auth.php';
