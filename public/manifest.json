@@ -18,5 +18,16 @@
             }
             ],
     "url": "127.0.0.1",
-    "screenshots": []
+    "screenshots": [
+        {
+            "src": "img/1626604913.logo.jpg",
+            "sizes": "1296x500",
+            "type": "image/jpg"
+        },
+        {
+            "src": "img/profile_photo.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        }
+    ]
 }

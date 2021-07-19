@@ -175,10 +175,9 @@
 </style>
 
 <script>
-
 export default {
     name: 'Welcome',
-   
+
     props: {
         canLogin: Boolean,
         canRegister: Boolean,
