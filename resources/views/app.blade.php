@@ -17,10 +17,10 @@
         <link rel="manifest" href="manifest.json" />
 
         <!-- Adds PWA Install feature. -->
-        <script
+        {{-- <script
         type="module"
         src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwainstall"
-        ></script>
+        ></script> --}}
 
         <!--This is the "Offline copy of pages" service worker
 

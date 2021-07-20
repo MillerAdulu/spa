@@ -18,6 +18,6 @@ declare module 'lodash' {
 }
 
 declare module '@pwabuilder/pwainstall' {
-  import '@pwabuilder/pwainstall'
-  // export default
+  import { pwainstall } from '@pwabuilder/pwainstall'
+  export { pwainstall } 
 }

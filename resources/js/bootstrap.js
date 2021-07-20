@@ -52,8 +52,5 @@ window.EchoService = { // initialise echo instance/pusher connection only when a
 //     }
 // });
 
-// import Vue from 'vue';
-
-// window.Vue = require('vue');
 
 // Vue.config.devtools = true;

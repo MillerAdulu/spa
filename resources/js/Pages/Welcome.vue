@@ -175,8 +175,13 @@
 </style>
 
 <script>
+import { pwainstall } from '@pwabuilder/pwainstall'
 export default {
     name: 'Welcome',
+
+    components: {
+        pwainstall
+    },
 
     props: {
         canLogin: Boolean,

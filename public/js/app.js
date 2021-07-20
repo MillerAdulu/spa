@@ -97,8 +97,6 @@ window.EchoService = {
 //         }
 //     }
 // });
-// import Vue from 'vue';
-// window.Vue = require('vue');
 // Vue.config.devtools = true;
 
 /***/ }),
