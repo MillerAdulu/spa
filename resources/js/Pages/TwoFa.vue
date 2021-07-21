@@ -12,7 +12,7 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-hite border-b border-gray-200">
-                        <p><strong>Enable  Two-Fa</strong></p>
+                        <p><strong>Change Two-Fa Status</strong></p>
                             <div :class="{'active': toggleActive}" class="toggle_container">
                                 <toggle-button @change="triggerToggleEvent" />
                             </div>
@@ -46,6 +46,7 @@ export default {
     methods: {
         triggerToggleEvent(value) {
             this.toggleActive = value;
+            //call controller to effect status change
         }
     }
 }

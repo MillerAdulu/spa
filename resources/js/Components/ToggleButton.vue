@@ -1,10 +1,9 @@
 <template>
     <label for="toggle_button">
         <span v-if="isActive" class="toggle__label">On</span>
-        <span v-if="! isActive" class="toggle__label">Off</span>
-
-        <input type="checkbox" id="toggle_button" v-model="checkedValue">
-        <span class="toggle__switch"></span>
+        <span v-if="! isActive" class="toggle__label">Off</span> <br/>
+        <input type="checkbox" id="toggle_button" v-model="checkedValue"> <br/>
+        <span class="toggle__switch">Click Here TO Check Box</span>
     </label>
 </template>
 
@@ -26,10 +25,9 @@ export default {
     computed: {
         isActive() {
             return this.currentState;
-        }
-    },
+        },
 
-    checkedValue: {
+        checkedValue: {
 
         get() {
             return this.currentState
@@ -40,7 +38,7 @@ export default {
             this.$emit('change', newValue);
         }
     }
-
+    },
 }
 </script>
 <style scoped>
