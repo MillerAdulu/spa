@@ -12,7 +12,9 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-hite border-b border-gray-200">
-                        <p><strong>Change Two-Fa Status</strong></p>
+                        <p><strong>Two-Fa Status</strong></p>
+                            <!-- <Slider v-model:value="twoFa" />
+                            <div>{{ twoFa ? 'Enabled!' : 'Disabled!' }}</div> -->
                             <div :class="{'active': toggleActive}" class="toggle_container">
                                 <toggle-button @change="triggerToggleEvent" />
                             </div>
@@ -27,7 +29,7 @@
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated'
 import BreezeNavLink from '@/Components/NavLink'
 import ToggleButton from '@/Components/ToggleButton'
-
+// import Slider from '@/Components/Slider'
 export default {
     inheritAttrs: false,
 
@@ -35,7 +37,14 @@ export default {
         BreezeAuthenticatedLayout,
         BreezeNavLink,
         ToggleButton,
+        // Slider
     },
+
+    // data() {
+    //     return {
+    //         twoFa: false
+    //     }
+    // },
 
     data() {
         return {

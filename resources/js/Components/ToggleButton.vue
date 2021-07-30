@@ -1,9 +1,9 @@
 <template>
     <label for="toggle_button">
-        <span v-if="isActive" class="toggle__label">On</span>
-        <span v-if="! isActive" class="toggle__label">Off</span> <br/>
+        <span v-if="isActive" class="toggle__label">Enabled</span>
+        <span v-if="! isActive" class="toggle__label">Disabled</span> <br/>
         <input type="checkbox" id="toggle_button" v-model="checkedValue"> <br/>
-        <span class="toggle__switch">Click Here TO Check Box</span>
+        <span class="toggle__switch">Click here to change status</span>
     </label>
 </template>
 
