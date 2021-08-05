@@ -168,48 +168,42 @@ class UserProfileController extends Controller
 
         $files = UserProfile::where('user_id', Auth::id())->get(['signature', 'photograph', 
         'means_of_identification', 'public_utility_bill']);
-
-        // $newfiles = [];
         
-        if ($request->signature || $request->photograph || $request->means_of_identification || 
-        $request->public_utility_bill) {
+        // for each file that changes, delete path to old one
+        foreach ($request->file() as $val) {
+            foreach ($files as $value) {
+                if ($request->signature) {
+                    $file_path = storage_path() . "/app/uploads/" . $value->signature; //find way to variablerise original filename
+                    File::delete($file_path);
+                    $fileName = time().'.'.$val->getClientOriginalName();
+                    $val->storeAs('/uploads/', $fileName);
+                    UserProfile::where('user_id', Auth::id())->update(['signature' => $fileName]);
+                }
+                
+                if ($request->photograph) {
+                    $file_path = storage_path() . "/app/uploads/" . $value->photograph; //find way to variablerise original filename
+                    File::delete($file_path);
+                    $fileName = time().'.'.$val->getClientOriginalName();
+                    $val->storeAs('/uploads/', $fileName);
+                    UserProfile::where('user_id', Auth::id())->update(['photograph' => $fileName]);
+                }
 
-            // for each file that changes, delete path to old one
-            foreach ($request->file() as $val) {
-                foreach ($files as $value) {
-                    if ($value->signature) {
-                        $file_path = storage_path() . "/app/uploads/" . $value->signature; //find way to variablerise original filename
-                        File::delete($file_path);
-                        $fileName = time().'.'.$val->getClientOriginalName();
-                        $val->storeAs('/uploads/', $fileName);
-                        UserProfile::where('user_id', Auth::id())->update(['signature' => $fileName]);
-                    }
-                 
-                    elseif ($value->photograph) {
-                        $file_path = storage_path() . "/app/uploads/" . $value->photograph; //find way to variablerise original filename
-                        File::delete($file_path);
-                        $fileName = time().'.'.$val->getClientOriginalName();
-                        $val->storeAs('/uploads/', $fileName);
-                        UserProfile::where('user_id', Auth::id())->update(['photograph' => $fileName]);
-                    }
+                if ($request->means_of_identification) {
+                    $file_path = storage_path() . "/app/uploads/" . $value->means_of_identification; //find way to variablerise original filename
+                    File::delete($file_path);
+                    $fileName = time().'.'.$val->getClientOriginalName();
+                    $val->storeAs('/uploads/', $fileName);
+                    UserProfile::where('user_id', Auth::id())->update(['means_of_identification' => $fileName]);
+                }
 
-                    elseif ($value->means_of_identification) {
-                        $file_path = storage_path() . "/app/uploads/" . $value->means_of_identification; //find way to variablerise original filename
-                        File::delete($file_path);
-                        $fileName = time().'.'.$val->getClientOriginalName();
-                        $val->storeAs('/uploads/', $fileName);
-                        UserProfile::where('user_id', Auth::id())->update(['means_of_identification' => $fileName]);
-                    }
-
-                    elseif ($value->public_utility_bill) {
-                        $file_path = storage_path() . "/app/uploads/" . $value->public_utility_bill; //find way to variablerise original filename
-                        File::delete($file_path);
-                        $fileName = time().'.'.$val->getClientOriginalName();
-                        $val->storeAs('/uploads/', $fileName);
-                        UserProfile::where('user_id', Auth::id())->update(['public_utility_bill' => $fileName]);
-                    }
-                }  
-            }
+                if ($request->public_utility_bill) {
+                    $file_path = storage_path() . "/app/uploads/" . $value->public_utility_bill; //find way to variablerise original filename
+                    File::delete($file_path);
+                    $fileName = time().'.'.$val->getClientOriginalName();
+                    $val->storeAs('/uploads/', $fileName);
+                    UserProfile::where('user_id', Auth::id())->update(['public_utility_bill' => $fileName]);
+                }
+            }  
         }
 
         Session::flash('success', 'Your profile was successfully updated!');
