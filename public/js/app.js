@@ -11,8 +11,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
 /* harmony import */ var _inertiajs_progress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/progress */ "./node_modules/@inertiajs/progress/dist/index.js");
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // Import modules...
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js"); // Import modules...
 
 
 
@@ -36,8 +37,7 @@ var el = document.getElementById('app');
 }).use(_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.plugin).mount(el);
 _inertiajs_progress__WEBPACK_IMPORTED_MODULE_2__.InertiaProgress.init({
   color: '#4B5563'
-}); //Vue.config.devtools = true
-//createApp.config.devtools = true
+});
 
 /***/ }),
 
@@ -123,18 +123,22 @@ __webpack_require__.r(__webpack_exports__);
 var map = {
 	"./AdminShowProfile": [
 		"./resources/js/Pages/AdminShowProfile.vue",
+		"/js/vendor",
 		"resources_js_Pages_AdminShowProfile_vue"
 	],
 	"./AdminShowProfile.vue": [
 		"./resources/js/Pages/AdminShowProfile.vue",
+		"/js/vendor",
 		"resources_js_Pages_AdminShowProfile_vue"
 	],
 	"./AllUsers": [
 		"./resources/js/Pages/AllUsers.vue",
+		"/js/vendor",
 		"resources_js_Pages_AllUsers_vue"
 	],
 	"./AllUsers.vue": [
 		"./resources/js/Pages/AllUsers.vue",
+		"/js/vendor",
 		"resources_js_Pages_AllUsers_vue"
 	],
 	"./Auth/ConfirmPassword": [
@@ -203,58 +207,72 @@ var map = {
 	],
 	"./CloseAccount": [
 		"./resources/js/Pages/CloseAccount.vue",
+		"/js/vendor",
 		"resources_js_Pages_CloseAccount_vue"
 	],
 	"./CloseAccount.vue": [
 		"./resources/js/Pages/CloseAccount.vue",
+		"/js/vendor",
 		"resources_js_Pages_CloseAccount_vue"
 	],
 	"./CreateProfile": [
 		"./resources/js/Pages/CreateProfile.vue",
+		"/js/vendor",
 		"resources_js_Pages_CreateProfile_vue"
 	],
 	"./CreateProfile.vue": [
 		"./resources/js/Pages/CreateProfile.vue",
+		"/js/vendor",
 		"resources_js_Pages_CreateProfile_vue"
 	],
 	"./Dashboard": [
 		"./resources/js/Pages/Dashboard.vue",
+		"/js/vendor",
 		"resources_js_Pages_Dashboard_vue"
 	],
 	"./Dashboard.vue": [
 		"./resources/js/Pages/Dashboard.vue",
+		"/js/vendor",
 		"resources_js_Pages_Dashboard_vue"
 	],
 	"./EditProfile": [
 		"./resources/js/Pages/EditProfile.vue",
+		"/js/vendor",
 		"resources_js_Pages_EditProfile_vue"
 	],
 	"./EditProfile.vue": [
 		"./resources/js/Pages/EditProfile.vue",
+		"/js/vendor",
 		"resources_js_Pages_EditProfile_vue"
 	],
 	"./Pde": [
 		"./resources/js/Pages/Pde.vue",
+		"/js/vendor",
 		"resources_js_Pages_Pde_vue"
 	],
 	"./Pde.vue": [
 		"./resources/js/Pages/Pde.vue",
+		"/js/vendor",
 		"resources_js_Pages_Pde_vue"
 	],
 	"./Settings": [
 		"./resources/js/Pages/Settings.vue",
+		"/js/vendor",
 		"resources_js_Pages_Settings_vue"
 	],
 	"./Settings.vue": [
 		"./resources/js/Pages/Settings.vue",
+		"/js/vendor",
 		"resources_js_Pages_Settings_vue"
 	],
 	"./ShowProfile": [
 		"./resources/js/Pages/ShowProfile.vue",
+		"/js/vendor",
 		"resources_js_Pages_ShowProfile_vue"
 	],
 	"./ShowProfile.vue": [
 		"./resources/js/Pages/ShowProfile.vue",
+		"/js/vendor",
 		"resources_js_Pages_ShowProfile_vue"
 	],
 	"./TwoFa": [

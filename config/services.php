@@ -35,4 +35,9 @@ return [
         'secret'   => env('VONAGE_API_SECRET'),
         'sms_from' => env('VONAGE_SEND_FROM'),
     ],
+
+    'pusher' => [
+        'beams_instance_id' => env('PUSHER_BEAMS_INSTANCE_ID'),
+        'beams_secret_key' => env('PUSHER_BEAMS_SECET_KEY'),
+    ],
 ];

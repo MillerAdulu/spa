@@ -105,6 +105,7 @@
                 <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
                     Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
                 </div>
+                <pwa-update></pwa-update>
             </div>
         </div>
     </div>
@@ -176,11 +177,16 @@
 
 <script>
 import { pwainstall } from '@pwabuilder/pwainstall'
+import { pwaupdate } from '@pwabuilder/pwaupdate'
+
 export default {
+    inheritAttrs: false,
+
     name: 'Welcome',
 
     components: {
-        pwainstall
+        pwainstall,
+        pwaupdate
     },
 
     props: {

@@ -10,6 +10,8 @@ use Illuminate\Notifications\Notification;
 use App\Models\User;
 use App\Channels\SmsNotificationChannel;
 use App\Channels\Messages\SmsMessage;
+use NotificationChannels\PusherPushNotifications\PusherChannel;
+use NotificationChannels\PusherPushNotifications\PusherMessage;
 
 class TradingAccountActivated extends Notification implements ShouldQueue
 {
@@ -40,7 +42,7 @@ class TradingAccountActivated extends Notification implements ShouldQueue
      */
     public function via($notifiable) // use vonage or custom channel with TwilioSms
     {
-    return ['mail', 'broadcast', 'database'/*, SmsNotificationChannel::class*/];
+    return ['mail', 'broadcast', 'database', PusherChannel::class/*, SmsNotificationChannel::class*/];
     }
 
     /**
@@ -101,6 +103,15 @@ class TradingAccountActivated extends Notification implements ShouldQueue
         //     'notificationmessage' => "Hi {$this->user->first_name}, you're now set to trade"
         // ]);
     }
+
+    public function toPushNotification($notifiable)
+    {
+        return PusherMessage::create()
+            ->web()
+            ->sound('success')
+            ->body("Hi {$this->user->first_name}, you're now set to trade!");
+    }
+
 
     public function broadcastType()
     {

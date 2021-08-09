@@ -30,12 +30,24 @@
         This code uses the pwa-update web component https://github.com/pwa-builder/pwa-update to register your service worker,
         tell the user when there is an update available and let the user know when your PWA is ready to use offline.
         -->
-        <script type="module">
+        {{-- <script type="module">
         import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
 
         const el = document.createElement('pwa-update');
         document.body.appendChild(el);
-        </script>
+        </script> --}}
+
+        {{-- <script type="module">
+        import "https://js.pusher.com/beams/service-worker.js";
+        const beamsClient = new PusherPushNotifications.Client({
+            instanceId: '70c36fac-c3a8-4d54-ab25-dbe58acb0d55',
+        });
+        
+        beamsClient.start()
+            .then(() => beamsClient.addDeviceInterest('hello'))
+            .then(() => console.log('Successfully registered and subscribed!'))
+            .catch(console.error);
+         </script> --}}
         <!-- Scripts -->
         @routes
         <script src="{{ mix('js/manifest.js') }}" defer></script>

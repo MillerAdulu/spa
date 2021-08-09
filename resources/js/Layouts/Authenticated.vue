@@ -26,7 +26,7 @@
                                 </breeze-nav-link>
                             </div>
                         </div>
-                        <!-- Duplicate this for notification bell component -->
+                        <!-- Duplicate this for notification bell component or something close -->
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <!-- Settings Dropdown -->
                             <div class="ml-3 relative">
@@ -42,6 +42,8 @@
                                                 </svg>
                                             </button>
                                         </span>
+                                        <!-- <avatar :username="fullname"></avatar> -->
+                                        <notification-bell />
                                     </template>
 
                                     <template #content>
@@ -134,7 +136,8 @@
             <!-- Page Content -->
             <main>
                 <flash-message />
-                <broadcast-message :message="message"></broadcast-message>
+                <!-- <broadcast-message :message="message"></broadcast-message> -->
+                <broadcast-message />
                 <slot />
             </main>
         </div>
@@ -142,22 +145,22 @@
 </template>
 
 <script>
-    import BreezeApplicationLogo from '@/Components/ApplicationLogo'
-    import BreezeDropdown from '@/Components/Dropdown'
-    import BreezeDropdownLink from '@/Components/DropdownLink'
-    import BreezeNavLink from '@/Components/NavLink'
-    import BreezeResponsiveNavLink from '@/Components/ResponsiveNavLink'
-    import FlashMessage from '@/Components/FlashMessage'
-    import BroadcastMessage from '@/Components/BroadcastMessage'
-    //import DashboardAvatar from '@/Components/DashboardAvatar'
-    //import Avatar from 'vue-avatar'
-    //import DashboardNotificationBell from '@/Components/DashboardNotificationBell'
+import BreezeApplicationLogo from '@/Components/ApplicationLogo'
+import BreezeDropdown from '@/Components/Dropdown'
+import BreezeDropdownLink from '@/Components/DropdownLink'
+import BreezeNavLink from '@/Components/NavLink'
+import BreezeResponsiveNavLink from '@/Components/ResponsiveNavLink'
+import FlashMessage from '@/Components/FlashMessage'
+import BroadcastMessage from '@/Components/BroadcastMessage'
+import { NotificationBell } from 'vue-notification-bell'
+// import { Avatar } from 'vue-avatar'
+
     export default {
         inheritAttrs: false,
         
         props: {
             username: String,
-            message: String
+            // message: String
         },
 
         components: {
@@ -168,9 +171,8 @@
             BreezeResponsiveNavLink,
             FlashMessage,
             BroadcastMessage,
-            //DashboardAvatar,
-            //Avatar,
-            //DashboardNotificationBell,
+            NotificationBell,
+            // Avatar,
         },
 
         computed: {

@@ -44,18 +44,6 @@ export default {
     // },
 
     // methods: {
-    //     Test() {
-    //         this.body = 'Test',
-    //         this.show = true
-    //         console.log(this.body)
-    //     }
-    // },
-
-    // created() {
-    //     this.Test();
-    // },
-
-    // methods: {
     //     Listen() {
     //         window.Echo.private(`user.${this.$page.props.auth.user.id}`)
     //             .listen('.TradingAccountActivation', (e) => {

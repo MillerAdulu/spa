@@ -12,11 +12,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _pwabuilder_pwainstall__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @pwabuilder/pwainstall */ "./node_modules/@pwabuilder/pwainstall/dist/pwa-install.js");
+/* harmony import */ var _pwabuilder_pwaupdate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @pwabuilder/pwaupdate */ "./node_modules/@pwabuilder/pwaupdate/dist/pwa-update.js");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  inheritAttrs: false,
   name: 'Welcome',
   components: {
-    pwainstall: _pwabuilder_pwainstall__WEBPACK_IMPORTED_MODULE_0__.pwainstall
+    pwainstall: _pwabuilder_pwainstall__WEBPACK_IMPORTED_MODULE_0__.pwainstall,
+    pwaupdate: _pwabuilder_pwaupdate__WEBPACK_IMPORTED_MODULE_1__.pwaupdate
   },
   props: {
     canLogin: Boolean,
@@ -258,6 +262,8 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
 
   var _component_pwa_install = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("pwa-install");
 
+  var _component_pwa_update = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("pwa-update");
+
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [$props.canLogin ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_2, [_ctx.$page.props.auth.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_inertia_link, {
     key: 0,
     href: "/dashboard",
@@ -300,7 +306,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* STABLE_FRAGMENT */
   ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [_hoisted_7, _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, " Laravel v" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.laravelVersion) + " (PHP v" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.phpVersion) + ") ", 1
   /* TEXT */
-  )])])]);
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pwa_update)])])]);
 });
 
 /***/ }),

@@ -9,6 +9,15 @@ module.exports = {
         },
     },
 
+    module: {
+      rules: [
+        {
+          test: /\.styl$/,
+          loader: "stylus-loader", // compiles Styl to CSS
+        },
+      ],
+    },
+    
     plugins: [
         new webpack.DefinePlugin({
           __VUE_OPTIONS_API__: true,

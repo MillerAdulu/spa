@@ -52,5 +52,4 @@ window.EchoService = { // initialise echo instance/pusher connection only when a
 //     }
 // });
 
-
 // Vue.config.devtools = true;
