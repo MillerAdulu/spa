@@ -18,11 +18,3 @@ workbox.routing.registerRoute(
     cacheName: CACHE
   })
 );
-
-
-window.navigator.serviceWorker.ready.then(serviceWorkerRegistration =>
-  const beamsClient = new PusherPushNotifications.Client({
-  instanceId: '70c36fac-c3a8-4d54-ab25-dbe58acb0d55',
-  serviceWorkerRegistration: serviceWorkerRegistration,
-})
-);

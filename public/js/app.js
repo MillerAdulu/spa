@@ -11,9 +11,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
 /* harmony import */ var _inertiajs_progress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/progress */ "./node_modules/@inertiajs/progress/dist/index.js");
+/* harmony import */ var _pusher_push_notifications_web__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @pusher/push-notifications-web */ "./node_modules/@pusher/push-notifications-web/dist/push-notifications-esm.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js"); // Import modules...
+
 
 
 
@@ -34,10 +36,19 @@ var el = document.getElementById('app');
   methods: {
     route: route
   }
-}).use(_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.plugin).mount(el);
+}).use(_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.plugin, _pusher_push_notifications_web__WEBPACK_IMPORTED_MODULE_3__).mount(el);
 _inertiajs_progress__WEBPACK_IMPORTED_MODULE_2__.InertiaProgress.init({
   color: '#4B5563'
-});
+}); // window.navigator.serviceWorker.ready.then(serviceWorkerRegistration =>
+//     const beamsClient = new PusherPushNotifications.Client({
+//       instanceId: '70c36fac-c3a8-4d54-ab25-dbe58acb0d55',
+//       serviceWorkerRegistration: serviceWorkerRegistration,
+//     })
+//     );
+//     beamsClient.start()
+//       .then(() => beamsClient.addDeviceInterest('hello'))
+//       .then(() => console.log('Successfully registered and subscribed!'))
+//       .catch(console.error);
 
 /***/ }),
 
