@@ -15,14 +15,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Telescope::ignoreMigrations();
+        // Telescope::ignoreMigrations();
 
-        if ($this->app->environment('local')) {
-            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
-            $this->app->register(TelescopeServiceProvider::class);
+        // if ($this->app->environment('local')) {
+        //     $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+        //     $this->app->register(TelescopeServiceProvider::class);
 
-        //$this->app->bind('App\Contracts\MustVerifyPhoneNumber', 'App\Models\User');
-        }
+        // //$this->app->bind('App\Contracts\MustVerifyPhoneNumber', 'App\Models\User');
+        // }
     }
 
     /**
