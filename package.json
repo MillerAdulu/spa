@@ -10,6 +10,9 @@
         "production": "mix --production",
         "postinstall": "npm run prod"
     },
+    "engines": {
+        "node": "14.x"
+    },
     "devDependencies": {
         "@babel/preset-typescript": "^7.13.0",
         "@inertiajs/inertia": "^0.8.4",
