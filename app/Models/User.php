@@ -67,6 +67,17 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneNu
     }
 
     /**
+    * A user can have many chats
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+    public function chats()
+    {
+    return $this->hasMany(Chat::class);
+    }
+
+
+    /**
      * Determine if the user has verified their phone number.
      *
      * @return bool

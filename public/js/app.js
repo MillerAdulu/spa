@@ -41,7 +41,7 @@ _inertiajs_progress__WEBPACK_IMPORTED_MODULE_2__.InertiaProgress.init({
   color: '#4B5563'
 }); // window.navigator.serviceWorker.ready.then(serviceWorkerRegistration =>
 //     const beamsClient = new PusherPushNotifications.Client({
-//       instanceId: '70c36fac-c3a8-4d54-ab25-dbe58acb0d55',
+//       instanceId: process.env.PUSHER_BEAMS_INSTANCE_ID,
 //       serviceWorkerRegistration: serviceWorkerRegistration,
 //     })
 //     );
@@ -215,6 +215,16 @@ var map = {
 	"./Auth/VerifyTwoFa.vue": [
 		"./resources/js/Pages/Auth/VerifyTwoFa.vue",
 		"resources_js_Pages_Auth_VerifyTwoFa_vue"
+	],
+	"./Chats": [
+		"./resources/js/Pages/Chats.vue",
+		"/js/vendor",
+		"resources_js_Pages_Chats_vue"
+	],
+	"./Chats.vue": [
+		"./resources/js/Pages/Chats.vue",
+		"/js/vendor",
+		"resources_js_Pages_Chats_vue"
 	],
 	"./CloseAccount": [
 		"./resources/js/Pages/CloseAccount.vue",

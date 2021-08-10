@@ -59,9 +59,9 @@
                                         <breeze-dropdown-link v-else :href="route('profile.show', `${$page.props.auth.user.uuid}`)">
                                             Profile
                                         </breeze-dropdown-link>
-                                        <!-- <breeze-dropdown-link v-if="$page.props.auth.user.role === 'user'" :href="route('payments')">
-                                            Payments
-                                        </breeze-dropdown-link> -->
+                                        <breeze-dropdown-link :href="route('chat.view')">
+                                            Chats
+                                        </breeze-dropdown-link>
                                         <breeze-dropdown-link :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </breeze-dropdown-link>
@@ -115,9 +115,9 @@
                             <breeze-responsive-nav-link v-else :href="route('profile.show', `${$page.props.auth.user.uuid}`)">
                                 Profile
                             </breeze-responsive-nav-link>
-                            <!-- <breeze-responsive-nav-link v-if="$page.props.auth.user.role === 'user'" :href="route('payments')">
-                                Payments
-                            </breeze-responsive-nav-link> -->
+                            <breeze-dropdown-link :href="route('chat.view')">
+                                Chats
+                            </breeze-dropdown-link>
                             <breeze-responsive-nav-link :href="route('logout')" method="post" as="button">
                                 Log Out
                             </breeze-responsive-nav-link>

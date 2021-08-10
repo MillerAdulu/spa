@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\UserSettingsController;
 use App\Http\Controllers\Auth\TwoFaController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\ChatsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -126,5 +127,17 @@ Route::get('/download/{filename}', [AdminController::class, 'download'])
 Route::get('display-image/{filename}', [AdminController::class, 'displayImage'])
 ->middleware(['auth', 'verified', 'verifiedphonenumber'])
 ->name('display-image');
+
+Route::get('/chats', [ChatsController::class, 'index'])
+->middleware(['auth', 'verified', 'verifiedphonenumber'])
+->name('chat.view');
+
+Route::get('/chats/fetch', [ChatsController::class, 'fetchChats'])
+->middleware(['auth', 'verified', 'verifiedphonenumber'])
+->name('chat.fetch');
+
+Route::post('/chats/send', [ChatsController::class, 'sendChat'])
+->middleware(['auth', 'verified', 'verifiedphonenumber'])
+->name('chat.send');
 
 require __DIR__.'/auth.php';

@@ -9,7 +9,7 @@ class UserProfile extends Model
 {
     use HasFactory;
 
-       /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
