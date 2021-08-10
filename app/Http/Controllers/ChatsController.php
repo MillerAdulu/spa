@@ -28,7 +28,8 @@ class ChatsController extends Controller
     */
     public function fetchChats()
     {
-      return Chat::with('user')->get(['id', 'user_id', 'chat']);
+      return Chat::with('user')->get(['id', 'user_id', 'chat']); // returning with user to provide reference need to match chat with user otherwise can't get user first name required by chat-message component. Find better more decoupled way.
+        // return Chat::get(['id', 'user_id', 'chat']);
     }
     
     /**
@@ -47,7 +48,7 @@ class ChatsController extends Controller
     
       broadcast(new ChatSent($user, $chat))->toOthers();
 
-      Session::flash('success', 'Chat Sent!');
+    //   Session::flash('success', 'Chat Sent!');
       return ['status' => 'Chat Sent!'];
     }
     

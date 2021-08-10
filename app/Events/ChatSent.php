@@ -41,6 +41,20 @@ class ChatSent
         $this->chat = $chat;
     }
 
+    
+    /**
+    * Get the data to broadcast.
+    *
+    * @return array
+    */
+    public function broadcastWith()
+    {
+        return [
+            'first_name' => $this->user->first_name,
+            $this->chat
+        ];
+    }
+
     /**
     * Get the channels the event should broadcast on.
     *
