@@ -5,10 +5,10 @@
     "short_name": "SPA",
     "scope": "/",
     "display": "standalone",
-    "start_url": "127.0.0.1",
+    "start_url": "https://spa-deploy.herokuapp.com",
     "background_color": "#000000",
     "theme_color": "transparent",
-    "description": "Learning web development.",
+    "description": "A minolith Laravel SPA.",
     "orientation": "any",
     "related_applications": [],
     "prefer_related_applications": false,
@@ -17,7 +17,7 @@
         "sizes": "180x180"
             }
             ],
-    "url": "127.0.0.1",
+    "url": "https://spa-deploy.herokuapp.com",
     "screenshots": [
         {
             "src": "img/1626604913.logo.jpg",
